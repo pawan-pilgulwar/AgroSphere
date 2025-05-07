@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-2 py-3">
               <div className="flex justify-center items-center mr-5">
                 <img
-                  src="./logo/shopLogo.png"
+                  src="/logo/shopLogo.png"
                   alt="Logo"
                   className="h-10 w-10"
                 />
@@ -57,7 +57,7 @@ const Navbar = () => {
               className="bg-gray-800 border-1 border-gray-500 text-white text-lg outline-none px-4 py-1 w-4xs"
             />
             <button className="px-2 py-1 border-1 border-gray-500 rounded-r-lg bg-blue-700">
-              <img className="h-7 w-7" src="./logo/search.png" alt="" />
+              <img className="h-7 w-7" src="/logo/search.png" alt="" />
             </button>
           </div>
 
@@ -65,7 +65,7 @@ const Navbar = () => {
           <div className="flex justify-center items-center">
             <button className="flex justify-center items-center hover:border-1 hover:border-gray-500 rounded-lg mx-1 hover:bg-gray-800 p-2">
               <div className="relative">
-                <img className="h-7 w-7" src="./logo/favorite.png" alt="" />
+                <img className="h-7 w-7" src="/logo/favorite.png" alt="" />
                 <span className="absolute top-0 right-0 bg-red-500 px-1 text-xs rounded-full">
                   0
                 </span>
@@ -76,7 +76,7 @@ const Navbar = () => {
             <Link href="/shopping-cart">
               <button className="flex justify-center items-center hover:border-1 hover:border-gray-500 rounded-lg mx-1 hover:bg-gray-800 p-2">
                 <div className="relative">
-                  <img className="h-7 w-7" src="./logo/cart.png" alt="" />
+                  <img className="h-7 w-7" src="/logo/cart.png" alt="" />
                   <span className="absolute top-0 right-0 bg-red-500 px-1 text-xs rounded-full">
                     0
                   </span>
@@ -90,12 +90,10 @@ const Navbar = () => {
 
             <button
               className="flex justify-center items-center hover:border-1 hover:border-gray-500 rounded-lg mx-1 hover:bg-gray-800 p-2"
-              onClick={() => {
-                showUserDropdown();
-              }}
+              onClick={showUserDropdown}
             >
               <div className="h-7 w-7">
-                <img src="./logo/user.png" alt="" />
+                <img src="/logo/user.png" alt="" />
               </div>
               <span className="flex px-2 justify-center items-center">
                 MY Account{" "}
@@ -108,64 +106,64 @@ const Navbar = () => {
         {/* Bottom Section */}
         <section className="flex justify-around items-center bg-gray-800 py-1">
           <div className="flex justify-center space-x-4 text-lg">
-            <a
+            <Link
               href="/"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Home
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/seeds-and-plants"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Seeds & Plants
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/farming-tools"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Farming Tools
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/fertilizers"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Fertilizers
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/pest-control"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Pest Control
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/irrigation"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Irrigation
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/greenhouse"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Greenhouse
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/livestock"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Livestock
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/category/home-garden"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Home & Garden
-            </a>
+            </Link>
           </div>
 
           <div className="flex justify-center items-center">
-            <img className="h-7 w-7" src="./logo/location.png" alt="" />
+            <img className="h-7 w-7" src="/logo/location.png" alt="" />
             <span className="pl-2 font-bold text-lg">
               Deliver to: United States
             </span>

@@ -1,5 +1,5 @@
 import React from "react";
-import productContext from "./productContext";
+import productContext from "./ProductContext";
 
 const ProductState = (props) => {
   return (
