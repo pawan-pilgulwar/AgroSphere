@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const UserDropdonMenu = () => {
   return (
@@ -12,9 +13,11 @@ const UserDropdonMenu = () => {
             <span className="text-gray-400">Email</span>
           </div> */}
           <div className="flex gap-3 pl-5 text-lg">
-            <button className="border-1 px-2 py-1 rounded-xl bg-blue-800">
-              Login
-            </button>
+            <Link href="/login">
+              <button className="border-1 px-2 py-1 rounded-xl bg-blue-800">
+                Login
+              </button>
+            </Link>
             <button className="border-1 px-2 py-1 rounded-xl bg-blue-800">
               Sign Up
             </button>
@@ -28,7 +31,7 @@ const UserDropdonMenu = () => {
             <Link href="#">Acoount</Link>
           </div>
           <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">My Orders</Link>
+            <Link href="/shopping-cart">My Orders</Link>
           </div>
           <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
             <Link href="#">My Lists</Link>

@@ -1,15 +1,17 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import UserDropdonMenu from "@/components/UserDropdonMenu";
 
 const Navbar = () => {
+
+  const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden")
+  
   const showUserDropdown = () => {
-    let userDropdown = document.querySelector("#userDropdown");
-    if (userDropdown.classList.contains("hidden")) {
-      userDropdown.classList.remove("hidden");
+    if (UserDropdownDisplay === "hidden") {
+      setUserDropdownDisplay("block")
     } else {
-      userDropdown.classList.add("hidden");
+      setUserDropdownDisplay("hidden")
     }
   };
 
@@ -174,7 +176,7 @@ const Navbar = () => {
       {/* user dropdown menu */}
       <div
         id="userDropdown"
-        className="z-14 hidden bg-gray-700 text-white rounded-2xl absolute right-8 top-17 border-1 border-gray-600 w-fit"
+        className={`z-14 ${UserDropdownDisplay} bg-gray-700 text-white rounded-2xl absolute right-8 top-17 border-1 border-gray-600 w-fit`}
       >
         <UserDropdonMenu />
       </div>

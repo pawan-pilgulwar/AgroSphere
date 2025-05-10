@@ -59,80 +59,80 @@ export default function Homepage() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              {
-                title: "Seeds & Plants",
-                image: "/images/seeds.jpg",
-                description:
-                  "High-quality seeds and healthy plants for your farm",
-                link: "/category/seeds",
-              },
-              {
-                title: "Fertilizers",
-                image: "/images/fertilizers.jpg",
-                description:
-                  "Organic and chemical fertilizers for optimal growth",
-                link: "/category/fertilizers",
-              },
-              {
-                title: "Equipment",
-                image: "/images/equipment.jpg",
-                description: "Modern farming tools and machinery",
-                link: "/category/equipment",
-              },
-              {
-                title: "Pest Control",
-                image: "/images/pest-control.jpg",
-                description: "Safe and effective pest management solutions",
-                link: "/category/pest-control",
-              },
-              {
-                title: "Irrigation",
-                image: "/images/irrigation.jpg",
-                description: "Efficient water management systems",
-                link: "/category/irrigation",
-              },
-              {
-                title: "Greenhouse",
-                image: "/images/greenhouse.jpg",
-                description: "Structures and supplies for controlled farming",
-                link: "/category/greenhouse",
-              },
-              {
-                title: "Soil Care",
-                image: "/images/soil-care.jpg",
-                description: "Soil testing and improvement products",
-                link: "/category/soil-care",
-              },
-              {
-                title: "Livestock",
-                image: "/images/livestock.jpg",
-                description: "Animal feed and care products",
-                link: "/category/livestock",
-              },
-              {
-                title: "Organic Farming",
-                image: "/images/organic.jpg",
-                description: "Certified organic farming supplies",
-                link: "/category/organic",
-              },
-              {
-                title: "Storage Solutions",
-                image: "/images/storage.jpg",
-                description: "Grain and produce storage systems",
-                link: "/category/storage",
-              },
-              {
-                title: "Safety Gear",
-                image: "/images/safety.jpg",
-                description: "Protective equipment for farmers",
-                link: "/category/safety",
-              },
-              {
-                title: "Smart Farming",
-                image: "/images/smart-farming.jpg",
-                description: "IoT and automation solutions",
-                link: "/category/smart-farming",
-              },
+              // {
+              //   title: "Seeds & Plants",
+              //   image: "/images/seeds.jpg",
+              //   description:
+              //     "High-quality seeds and healthy plants for your farm",
+              //   link: "/category/seeds",
+              // },
+              // {
+              //   title: "Fertilizers",
+              //   image: "/images/fertilizers.jpg",
+              //   description:
+              //     "Organic and chemical fertilizers for optimal growth",
+              //   link: "/category/fertilizers",
+              // },
+              // {
+              //   title: "Equipment",
+              //   image: "/images/equipment.jpg",
+              //   description: "Modern farming tools and machinery",
+              //   link: "/category/equipment",
+              // },
+              // {
+              //   title: "Pest Control",
+              //   image: "/images/pest-control.jpg",
+              //   description: "Safe and effective pest management solutions",
+              //   link: "/category/pest-control",
+              // },
+              // {
+              //   title: "Irrigation",
+              //   image: "/images/irrigation.jpg",
+              //   description: "Efficient water management systems",
+              //   link: "/category/irrigation",
+              // },
+              // {
+              //   title: "Greenhouse",
+              //   image: "/images/greenhouse.jpg",
+              //   description: "Structures and supplies for controlled farming",
+              //   link: "/category/greenhouse",
+              // },
+              // {
+              //   title: "Soil Care",
+              //   image: "/images/soil-care.jpg",
+              //   description: "Soil testing and improvement products",
+              //   link: "/category/soil-care",
+              // },
+              // {
+              //   title: "Livestock",
+              //   image: "/images/livestock.jpg",
+              //   description: "Animal feed and care products",
+              //   link: "/category/livestock",
+              // },
+              // {
+              //   title: "Organic Farming",
+              //   image: "/images/organic.jpg",
+              //   description: "Certified organic farming supplies",
+              //   link: "/category/organic",
+              // },
+              // {
+              //   title: "Storage Solutions",
+              //   image: "/images/storage.jpg",
+              //   description: "Grain and produce storage systems",
+              //   link: "/category/storage",
+              // },
+              // {
+              //   title: "Safety Gear",
+              //   image: "/images/safety.jpg",
+              //   description: "Protective equipment for farmers",
+              //   link: "/category/safety",
+              // },
+              // {
+              //   title: "Smart Farming",
+              //   image: "/images/smart-farming.jpg",
+              //   description: "IoT and automation solutions",
+              //   link: "/category/smart-farming",
+              // },
             ].map((category, index) => (
               <Link
                 href={category.link}
@@ -275,7 +275,7 @@ export default function Homepage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <section className="py-10 bg-gradient-to-r from-green-600 to-green-700 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8 transition-all duration-500 hover:scale-105">
             Ready to Transform Your Farm?
