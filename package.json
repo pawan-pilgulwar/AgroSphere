@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "mongodb": "^6.16.0",
     "mongoose": "^8.14.1",
     "next": "15.3.1",
     "nodemon": "^3.1.10",
