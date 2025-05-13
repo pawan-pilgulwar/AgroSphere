@@ -173,7 +173,7 @@ export default function RegisterPage() {
                   type="text"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="John Doe"
+                  placeholder="Enter your name"
                   value={formData.name}
                   onChange={handleChange}
                 />
@@ -192,7 +192,7 @@ export default function RegisterPage() {
                   type="email"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="john@example.com"
+                  placeholder="Enter your email address"
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -211,7 +211,7 @@ export default function RegisterPage() {
                   type="tel"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="(123) 456-7890"
+                  placeholder="Enter your phone number"
                   value={formData.phone}
                   onChange={handleChange}
                 />
@@ -230,7 +230,7 @@ export default function RegisterPage() {
                   type="password"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
                 />
@@ -249,7 +249,7 @@ export default function RegisterPage() {
                   type="password"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="••••••••"
+                  placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
                 />
@@ -274,7 +274,7 @@ export default function RegisterPage() {
                   type="text"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="Green Valley Farms"
+                  placeholder="Enter your business name"
                   value={formData.businessName}
                   onChange={handleChange}
                 />
@@ -309,7 +309,7 @@ export default function RegisterPage() {
                   name="taxId"
                   type="text"
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="XX-XXXXXXX"
+                  placeholder="Enter your tax ID/EIN"
                   value={formData.taxId}
                   onChange={handleChange}
                 />
@@ -325,7 +325,7 @@ export default function RegisterPage() {
                   type="text"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="123 Farm Road"
+                  placeholder="Enter your business address"
                   value={formData.businessAddress}
                   onChange={handleChange}
                 />
@@ -344,7 +344,7 @@ export default function RegisterPage() {
                   type="text"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="Farmville"
+                  placeholder="Enter your city"
                   value={formData.city}
                   onChange={handleChange}
                 />
@@ -363,7 +363,7 @@ export default function RegisterPage() {
                   type="text"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="CA"
+                  placeholder="Enter your state"
                   value={formData.state}
                   onChange={handleChange}
                 />
@@ -382,7 +382,7 @@ export default function RegisterPage() {
                   type="text"
                   required
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="12345"
+                  placeholder="Enter your zip code"
                   value={formData.zipCode}
                   onChange={handleChange}
                 />
@@ -406,7 +406,7 @@ export default function RegisterPage() {
                   name="farmSize"
                   type="number"
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="100"
+                  placeholder="Enter your farm size"
                   value={formData.farmSize}
                   onChange={handleChange}
                 />
@@ -421,7 +421,7 @@ export default function RegisterPage() {
                   name="farmLocation"
                   type="text"
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="Rural Route 1"
+                  placeholder="Enter your farm location"
                   value={formData.farmLocation}
                   onChange={handleChange}
                 />
@@ -436,7 +436,7 @@ export default function RegisterPage() {
                   name="farmingExperience"
                   type="number"
                   className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                  placeholder="5"
+                  placeholder="Enter your farming experience"
                   value={formData.farmingExperience}
                   onChange={handleChange}
                 />

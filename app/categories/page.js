@@ -7,7 +7,7 @@ const categories = [
   {
     title: "Seeds & Plants",
     description: "High-quality seeds and healthy plants for your farm",
-    image: "/images/seeds.jpg",
+    image: "/images/seeds-and-plants.png",
     link: "/category/seeds-and-plants",
     icon: "🌱",
     featured: true,
@@ -16,7 +16,7 @@ const categories = [
   {
     title: "Fertilizers",
     description: "Organic and chemical fertilizers for optimal growth",
-    image: "/images/fertilizers.jpg",
+    image: "/images/fertilizers.webp",
     link: "/category/fertilizers",
     icon: "💧",
     featured: false,
@@ -43,7 +43,7 @@ const categories = [
   {
     title: "Irrigation",
     description: "Efficient water management systems",
-    image: "/images/irrigation.jpg",
+    image: "/images/irrigation.avif",
     link: "/category/irrigation",
     icon: "💦",
     featured: true,
@@ -61,7 +61,7 @@ const categories = [
   {
     title: "Livestock",
     description: "Animal feed and care products",
-    image: "/images/livestock.jpg",
+    image: "/images/liveStock.webp",
     link: "/category/livestock",
     icon: "🐄",
     featured: true,

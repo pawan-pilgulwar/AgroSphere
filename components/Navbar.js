@@ -116,6 +116,12 @@ const Navbar = () => {
               Home
             </Link>
             <Link
+              href="/lease-market"
+              className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
+            >
+              Lease Market
+            </Link>
+            <Link
               href="/category/seeds-and-plants"
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
@@ -144,12 +150,6 @@ const Navbar = () => {
               className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
             >
               Irrigation
-            </Link>
-            <Link
-              href="/category/greenhouse"
-              className="hover:border-1 hover:border-gray-500 hover:bg-gray-700 rounded-lg px-2"
-            >
-              Greenhouse
             </Link>
             <Link
               href="/category/livestock"

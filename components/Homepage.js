@@ -57,76 +57,58 @@ export default function Homepage() {
           <h2 className="text-4xl font-bold text-center mb-16 transition-all duration-500 hover:scale-105 hover:text-green-700">
             Shop by Category
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              // {
-              //   title: "Seeds & Plants",
-              //   image: "/images/seeds.jpg",
-              //   description:
-              //     "High-quality seeds and healthy plants for your farm",
-              //   link: "/category/seeds",
-              // },
-              // {
-              //   title: "Fertilizers",
-              //   image: "/images/fertilizers.jpg",
-              //   description:
-              //     "Organic and chemical fertilizers for optimal growth",
-              //   link: "/category/fertilizers",
-              // },
-              // {
-              //   title: "Equipment",
-              //   image: "/images/equipment.jpg",
-              //   description: "Modern farming tools and machinery",
-              //   link: "/category/equipment",
-              // },
+              {
+                title: "Seeds & Plants",
+                image: "/images/seeds-and-plants.png",
+                description:
+                  "High-quality seeds and healthy plants for your farm",
+                link: "/category/seeds",
+              },
+              {
+                title: "Fertilizers",
+                image: "/images/fertilizers.webp",
+                description:
+                  "Organic and chemical fertilizers for optimal growth",
+                link: "/category/fertilizers",
+              },
+              {
+                title: "Equipment",
+                image: "/images/equipment.jpg",
+                description: "Modern farming tools and machinery",
+                link: "/category/equipment",
+              },
               // {
               //   title: "Pest Control",
               //   image: "/images/pest-control.jpg",
               //   description: "Safe and effective pest management solutions",
               //   link: "/category/pest-control",
               // },
-              // {
-              //   title: "Irrigation",
-              //   image: "/images/irrigation.jpg",
-              //   description: "Efficient water management systems",
-              //   link: "/category/irrigation",
-              // },
-              // {
-              //   title: "Greenhouse",
-              //   image: "/images/greenhouse.jpg",
-              //   description: "Structures and supplies for controlled farming",
-              //   link: "/category/greenhouse",
-              // },
-              // {
-              //   title: "Soil Care",
-              //   image: "/images/soil-care.jpg",
-              //   description: "Soil testing and improvement products",
-              //   link: "/category/soil-care",
-              // },
-              // {
-              //   title: "Livestock",
-              //   image: "/images/livestock.jpg",
-              //   description: "Animal feed and care products",
-              //   link: "/category/livestock",
-              // },
+              {
+                title: "Irrigation",
+                image: "/images/irrigation.avif",
+                description: "Efficient water management systems",
+                link: "/category/irrigation",
+              },
+              {
+                title: "Livestock",
+                image: "/images/liveStock.webp",
+                description: "Animal feed and care products",
+                link: "/category/livestock",
+              },
               // {
               //   title: "Organic Farming",
               //   image: "/images/organic.jpg",
               //   description: "Certified organic farming supplies",
               //   link: "/category/organic",
               // },
-              // {
-              //   title: "Storage Solutions",
-              //   image: "/images/storage.jpg",
-              //   description: "Grain and produce storage systems",
-              //   link: "/category/storage",
-              // },
-              // {
-              //   title: "Safety Gear",
-              //   image: "/images/safety.jpg",
-              //   description: "Protective equipment for farmers",
-              //   link: "/category/safety",
-              // },
+              {
+                title: "Storage Solutions",
+                image: "/images/storage.webp",
+                description: "Grain and produce storage systems",
+                link: "/category/storage",
+              },
               // {
               //   title: "Smart Farming",
               //   image: "/images/smart-farming.jpg",
@@ -300,56 +282,6 @@ export default function Homepage() {
           </div>
         </div>
       </section>
-
-      <style jsx>{`
-        @keyframes gradient {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 15s ease infinite;
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fadeIn 1s ease-out forwards;
-        }
-
-        @keyframes float {
-          0% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-          100% {
-            transform: translateY(0px);
-          }
-        }
-
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
     </main>
   );
 }
