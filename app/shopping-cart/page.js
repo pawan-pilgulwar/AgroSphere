@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const page = () => {
   // Sample cart data - replace with actual cart state management
@@ -29,6 +29,13 @@ const page = () => {
       category: "Seeds & Plants",
     },
   ]);
+
+  const [itemCount, setItemCount] = useState(0);
+
+  useEffect(() => {
+    const totalCount = cartItems.length;
+    setItemCount(totalCount);
+  }, [cartItems]);
 
   const updateQuantity = (id, newQuantity) => {
     // if (newQuantity < 1) return;

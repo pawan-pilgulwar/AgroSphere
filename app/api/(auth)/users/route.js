@@ -1,13 +1,26 @@
-import connectDB from "@/dataBase/dbConnection";
-import User from "@/dataBase/models/user";
 import { NextResponse } from "next/server";
+import dbConnection from "@/dataBase/dbConnection";
+import User from "@/dataBase/models/User";
 
-export const GET = async () => {
-  try {
-    await connectDB();
-    const users = await User.find()
-    return NextResponse.json(JSON.stringify(users), { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
-  }
-};
+
+export async function GET(request) {
+    try {
+        await dbConnection();
+        const users = await User.find();
+        return NextResponse.json({ users });
+    } catch (error) {
+        console.log(error);
+    }
+  return NextResponse.json(users);
+}
+
+export async function POST(request) {
+    try {
+        await dbConnection();
+        const body = await request.json();
+        const user = await User.create(body);
+        return NextResponse.json({ user });
+    } catch (error) {
+        console.log(error);
+    }
+}

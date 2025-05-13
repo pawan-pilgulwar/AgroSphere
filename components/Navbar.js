@@ -93,13 +93,14 @@ const Navbar = () => {
             <button
               className="flex justify-center items-center hover:border-1 hover:border-gray-500 rounded-lg mx-1 hover:bg-gray-800 p-2"
               onClick={showUserDropdown}
+              onBlur={() => setTimeout(() => setUserDropdownDisplay("hidden"), 600)}
             >
               <div className="h-7 w-7">
                 <img src="/logo/user.png" alt="" />
               </div>
               <span className="flex px-2 justify-center items-center">
-                MY Account{" "}
-                {/* <img className="px-2" src="./logo/angle-down.png" alt="" /> */}
+                {/* {isLogin ? "MY Account" : "Sign in"} */}
+                MY Account
               </span>
             </button>
           </div>

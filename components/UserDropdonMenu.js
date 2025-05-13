@@ -1,64 +1,110 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import Image from "next/image";
 
 const UserDropdonMenu = () => {
+
+  const [isLogin, setIsLogin] = useState(false);
+  
   return (
     <div>
       <div className="flex flex-col px-6">
-        <div className="flex items-center py-3">
+        {!isLogin && (<Link href="/login">
+          <div className="flex items-center py-3 px-2 justify-start">
           <img src="/logo/user.png" alt="" />
-          {/* <div className="flex flex-col pl-5 text-lg">
-            <span className="h-6 w-6 mb-1">Name</span>
-            <span className="text-gray-400">Email</span>
-          </div> */}
-          <div className="flex gap-3 pl-5 text-lg">
-            <Link href="/login">
-              <button className="border-1 px-2 py-1 rounded-xl bg-blue-800">
-                Login
-              </button>
-            </Link>
-            <button className="border-1 px-2 py-1 rounded-xl bg-blue-800">
-              Sign Up
-            </button>
+            <div className="flex pl-5 text-lg font-bold italic">
+              Hello, Sign in
+            </div>
           </div>
-        </div>
+          </Link>)}
+
+        {isLogin && (
+        <div className="flex items-center py-3 px-2 justify-start">
+          <img src="/logo/user.png" alt="" />
+            <div className="flex flex-col pl-5 text-lg">
+              <span className="h-6 w-6 mb-1">Name</span>
+              <span className="text-gray-400">Email</span>
+            </div>
+        </div>)}
 
         <div className="bg-white h-1 opacity-20"></div>
 
         <div className="flex flex-col py-3 text-xl space-y-1">
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">Acoount</Link>
+          <Link href="#">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2">
+            <Image width={25} height={10} src="/logo/myAccount.png" alt="" />
+            Acoount
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="/shopping-cart">My Orders</Link>
+          </Link>
+
+          <Link href="/shopping-cart">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <Image width={25} height={10} src="/logo/myOrders.png" alt="" />
+            My Orders
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">My Lists</Link>
+          </Link>
+          
+          <Link href="#">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <Image width={25} height={10} src="/logo/wishlist.png" alt="" />
+            My Lists
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">My Wallet</Link>
+          </Link>
+
+          <Link href="#">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <Image width={25} height={10} src="/logo/myWallet.png" alt="" />
+            My Wallet
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">Favourites Items</Link>
+          </Link>
+
+          <Link href="#">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <Image width={25} height={10} src="/logo/favourite-items.png" alt="" />
+            Favourites Items
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">Voctures and gift cards</Link>
+          </Link>
+
+          {/* <Link href="#">
+            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+              <Image width={25} height={10} src="/logo/myAccount.png" alt="" />
+            Voctures and gift cards
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">Service</Link>
+          </Link> */}
+
+          <Link href="#">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <Image width={25} height={10} src="/logo/service.png" alt="" />
+            Service
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">My Reviews</Link>
+          </Link>
+
+          <Link href="#">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <Image width={25} height={10} src="/logo/myReview.png" alt="" />
+            My Reviews
           </div>
-          <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <Link href="#">Subscriptions</Link>
+          </Link>
+
+      
+
+          <Link href="#">
+          <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <Image width={25} height={10} src="/logo/subscription.png" alt="" />
+            Subscriptions
           </div>
-          {/* <div className="hover:bg-gray-500 px-2 py-1 rounded-md">
-            <button className="border-1 px-2 py-1 rounded-xl bg-red-800">
+          </Link>
+          
+          {isLogin && (<><div className="bg-white h-1 mt-2 opacity-20"></div>
+
+          <div className="hover:bg-gray-500 py-1 rounded-md">
+            <button className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+              <Image width={25} height={10} src="/logo/logout.png" alt="" />
               Logout
             </button>
-          </div> */}
+          </div>
+          </>)}
         </div>
       </div>
     </div>
