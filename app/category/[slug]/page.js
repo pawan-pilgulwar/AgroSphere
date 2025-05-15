@@ -1,7 +1,7 @@
-"use client"
-import { useParams } from 'next/navigation'
-import Image from 'next/image'
-import Link from 'next/link'
+"use client";
+import { useParams } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
 // Sample product data organized by category
 const productsByCategory = {
@@ -21,7 +21,7 @@ const productsByCategory = {
             description: "High-yield, disease-resistant tomato seeds",
             rating: 4.8,
             reviews: 120,
-            stock: 50
+            stock: 50,
           },
           {
             id: 2,
@@ -31,9 +31,9 @@ const productsByCategory = {
             description: "Certified organic carrot seeds",
             rating: 4.6,
             reviews: 85,
-            stock: 30
-          }
-        ]
+            stock: 30,
+          },
+        ],
       },
       "fruit-plants": {
         name: "Fruit Plants",
@@ -46,13 +46,13 @@ const productsByCategory = {
             description: "Ever-bearing strawberry plants",
             rating: 4.7,
             reviews: 95,
-            stock: 25
-          }
-        ]
-      }
-    }
+            stock: 25,
+          },
+        ],
+      },
+    },
   },
-  "fertilizers": {
+  fertilizers: {
     title: "Fertilizers",
     description: "Premium fertilizers for optimal plant growth",
     image: "/images/fertilizers.jpg",
@@ -68,9 +68,9 @@ const productsByCategory = {
             description: "Rich organic compost for soil enrichment",
             rating: 4.7,
             reviews: 95,
-            stock: 40
-          }
-        ]
+            stock: 40,
+          },
+        ],
       },
       "chemical-fertilizers": {
         name: "Chemical Fertilizers",
@@ -83,47 +83,53 @@ const productsByCategory = {
             description: "Balanced NPK fertilizer for all plants",
             rating: 4.5,
             reviews: 110,
-            stock: 60
-          }
-        ]
-      }
-    }
-  }
-}
+            stock: 60,
+          },
+        ],
+      },
+    },
+  },
+};
 
 export default function CategoryPage() {
-  const params = useParams()
-  const categorySlug = params.slug
-  const category = productsByCategory[categorySlug]
+  const params = useParams();
+  const categorySlug = params.slug;
+  const category = productsByCategory[categorySlug];
 
   if (!category) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center p-8 bg-white rounded-lg shadow-lg">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Category Not Found</h1>
-          <p className="text-gray-600 mb-8">The category you're looking for doesn't exist.</p>
-          <Link 
-            href="/categories"
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            Category Not Found
+          </h1>
+          <p className="text-gray-600 mb-8">
+            The category you're looking for doesn't exist.
+          </p>
+          <Link
+            href="/#categories"
             className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
             Browse Categories
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
   // Flatten all products from all subcategories
   const allProducts = Object.values(category.subcategories).flatMap(
-    subcategory => subcategory.products
-  )
+    (subcategory) => subcategory.products
+  );
 
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{category.title}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            {category.title}
+          </h1>
           <p className="text-xl opacity-90 max-w-3xl">{category.description}</p>
         </div>
       </section>
@@ -133,7 +139,7 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col space-y-8">
             {allProducts.map((product) => (
-              <div 
+              <div
                 key={product.id}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
               >
@@ -175,7 +181,11 @@ export default function CategoryPage() {
                         {[...Array(5)].map((_, i) => (
                           <svg
                             key={i}
-                            className={`w-5 h-5 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                            className={`w-5 h-5 ${
+                              i < Math.floor(product.rating)
+                                ? "text-yellow-400"
+                                : "text-gray-300"
+                            }`}
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -215,8 +225,8 @@ export default function CategoryPage() {
                 href={`/category/${catSlug}`}
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   catSlug === categorySlug
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                    ? "bg-green-600 text-white"
+                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                 }`}
               >
                 {cat.title}
@@ -226,5 +236,5 @@ export default function CategoryPage() {
         </div>
       </section>
     </main>
-  )
+  );
 }

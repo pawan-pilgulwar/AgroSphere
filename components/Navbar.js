@@ -4,20 +4,19 @@ import React, { useState } from "react";
 import UserDropdonMenu from "@/components/UserDropdonMenu";
 
 const Navbar = () => {
+  const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden");
 
-  const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden")
-  
   const showUserDropdown = () => {
     if (UserDropdownDisplay === "hidden") {
-      setUserDropdownDisplay("block")
+      setUserDropdownDisplay("block");
     } else {
-      setUserDropdownDisplay("hidden")
+      setUserDropdownDisplay("hidden");
     }
   };
 
   return (
     <>
-      <nav className="bg-gray-900 text-white py-1">
+      <nav className="bg-gray-900 text-white pt-1">
         {/* Top Section */}
         <section className="flex items-center justify-around bg-gray-900 text-white">
           {/* Logo */}
@@ -68,7 +67,7 @@ const Navbar = () => {
             <button className="flex justify-center items-center hover:border-1 hover:border-gray-500 rounded-lg mx-1 hover:bg-gray-800 p-2">
               <div className="relative">
                 <img className="h-7 w-7" src="/logo/favorite.png" alt="" />
-                <span className="absolute top-0 right-0 bg-red-500 px-1 text-xs rounded-full">
+                <span className="absolute -top-1 -right-1.5 bg-red-500 px-1 text-xs rounded-full">
                   0
                 </span>
               </div>
@@ -79,8 +78,8 @@ const Navbar = () => {
               <button className="flex justify-center items-center hover:border-1 hover:border-gray-500 rounded-lg mx-1 hover:bg-gray-800 p-2">
                 <div className="relative">
                   <img className="h-7 w-7" src="/logo/cart.png" alt="" />
-                  <span className="absolute top-0 right-0 bg-red-500 px-1 text-xs rounded-full">
-                    0
+                  <span className="absolute -top-1.5 -right-1.5 bg-red-500 px-1 text-xs rounded-full">
+                    3
                   </span>
                 </div>
                 <span className="flex px-2 justify-center items-center">
@@ -93,7 +92,9 @@ const Navbar = () => {
             <button
               className="flex justify-center items-center hover:border-1 hover:border-gray-500 rounded-lg mx-1 hover:bg-gray-800 p-2"
               onClick={showUserDropdown}
-              onBlur={() => setTimeout(() => setUserDropdownDisplay("hidden"), 600)}
+              onBlur={() =>
+                setTimeout(() => setUserDropdownDisplay("hidden"), 600)
+              }
             >
               <div className="h-7 w-7">
                 <img src="/logo/user.png" alt="" />

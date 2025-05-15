@@ -52,7 +52,7 @@ export default function Homepage() {
       </section>
 
       {/* Product Categories Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white" id="categories">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 transition-all duration-500 hover:scale-105 hover:text-green-700">
             Shop by Category

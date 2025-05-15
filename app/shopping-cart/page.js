@@ -109,7 +109,7 @@ const page = () => {
             <div className="text-center py-12 bg-white rounded-xl shadow-sm">
               <div className="mb-6">
                 <Image
-                  src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop&q=60"
+                  src="/logo/myOrders.png"
                   alt="Empty Cart"
                   width={200}
                   height={200}
