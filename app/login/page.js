@@ -1,30 +1,67 @@
-"use client"
-import { useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  })
 
+  const router = useRouter();
   const [errors, setErrors] = useState({})
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } 
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     // Add your login logic here
-    console.log('Login attempt with:', formData)
-  }
+    try {
+      const response = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrors({ submit: data.error || "Login failed" });
+        return;
+      }
+
+      router.push("/");
+    } catch (error) {
+      setErrors({ submit: "An error occurred during registration" });
+    }
+  };
 
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -66,6 +103,9 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
               />
+              {errors.email && (
+                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                )}
             </div>
             <div>
               <label htmlFor="password" className="sr-only">
@@ -82,6 +122,9 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
               />
+              {errors.password && (
+                  <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                )}
             </div>
           </div>
 
@@ -95,7 +138,10 @@ export default function LoginPage() {
                 checked={formData.rememberMe}
                 onChange={handleChange}
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-900"
+              >
                 Remember me
               </label>
             </div>
@@ -167,7 +213,7 @@ export default function LoginPage() {
         {/* Register Link */}
         <div className="text-center mt-6">
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don't have an account?{" "}
             <Link
               href="/register"
               className="font-medium text-green-600 hover:text-green-500 transition-colors duration-200"
@@ -178,5 +224,5 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }

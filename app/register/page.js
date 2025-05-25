@@ -88,7 +88,7 @@ export default function RegisterPage() {
 
   const validateForm = (formData) => {
     const newErrors = {};
-    
+
     // Name validation
     if (!formData.name) {
       newErrors.name = "Name is required";
@@ -123,13 +123,16 @@ export default function RegisterPage() {
       if (formData.password.length < 8) {
         newErrors.password = "Password must be at least 8 characters long";
       } else if (!/[A-Z]/.test(formData.password)) {
-        newErrors.password = "Password must contain at least one uppercase letter";
+        newErrors.password =
+          "Password must contain at least one uppercase letter";
       } else if (!/[a-z]/.test(formData.password)) {
-        newErrors.password = "Password must contain at least one lowercase letter";
+        newErrors.password =
+          "Password must contain at least one lowercase letter";
       } else if (!/[0-9]/.test(formData.password)) {
         newErrors.password = "Password must contain at least one number";
       } else if (!/[!@#$%^&*]/.test(formData.password)) {
-        newErrors.password = "Password must contain at least one special character (!@#$%^&*)";
+        newErrors.password =
+          "Password must contain at least one special character (!@#$%^&*)";
       }
     }
 
@@ -160,18 +163,18 @@ export default function RegisterPage() {
       }
     }
 
-    // Farm information validation
-    if (formData.farmSize && isNaN(formData.farmSize)) {
-      newErrors.farmSize = "Farm size must be a number";
-    }
-    if (formData.farmingExperience && isNaN(formData.farmingExperience)) {
-      newErrors.farmingExperience = "Farming experience must be a number";
-    }
+    // // Farm information validation
+    // if (formData.farmSize && isNaN(formData.farmSize)) {
+    //   newErrors.farmSize = "Farm size must be a number";
+    // }
+    // if (formData.farmingExperience && isNaN(formData.farmingExperience)) {
+    //   newErrors.farmingExperience = "Farming experience must be a number";
+    // }
 
-    // Primary products validation
-    if (formData.primaryProducts.length === 0) {
-      newErrors.primaryProducts = "Please select at least one product category";
-    }
+    // // Primary products validation
+    // if (formData.primaryProducts.length === 0) {
+    //   newErrors.primaryProducts = "Please select at least one product category";
+    // }
 
     // Terms agreement validation
     if (!formData.agreeToTerms) {
@@ -183,7 +186,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newErrors = validateForm(formData);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -191,7 +194,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch("/api/users", {
+      const response = await fetch("/api/users/createuser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
