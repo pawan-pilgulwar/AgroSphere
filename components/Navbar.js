@@ -20,7 +20,7 @@ const Navbar = (props) => {
     <>
       <nav className="bg-gray-900 text-white pt-1 w-full">
         {/* Top Section */}
-        <section className="flex items-center justify-between bg-gray-900 text-white max-w-7xl mx-auto px-4">
+        <section className="flex items-center justify-between bg-gray-900 text-white px-5">
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center space-x-2 py-3">
