@@ -2,9 +2,11 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import UserDropdonMenu from "@/components/UserDropdonMenu";
+import { useAlert } from "@/context/AlertContext";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden");
+  const { showAlert } = useAlert()
 
   const showUserDropdown = () => {
     if (UserDropdownDisplay === "hidden") {

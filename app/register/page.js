@@ -3,9 +3,11 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useAlert } from "@/context/AlertContext";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { showAlert } = useAlert()
   const [formData, setFormData] = useState({
     // Personal Information
     name: "",
@@ -209,7 +211,9 @@ export default function RegisterPage() {
         return;
       }
 
+      localStorage.setItem('token', data.authToken);
       router.push("/");
+      showAlert("success", "User created and login successfully.")
     } catch (error) {
       setErrors({ submit: "An error occurred during registration" });
     }

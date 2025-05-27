@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import User from "@/dataBase/models/user";
 import connectDB from "@/dataBase/dbConnection";
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email format" }),
@@ -26,17 +28,25 @@ export async function POST(request) {
         }
 
         const { email, password } = validation.data;
+
         const user = await User.findOne({ email });
         if (!user) {
         return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
-
-        const isPasswordValid = password === user.password;
-        if (!isPasswordValid) {
-        return NextResponse.json({ error: "Invalid password" }, { status: 401 });
+        
+        const passwordCompare = await bcrypt.compare(password, user.password)
+        if(!passwordCompare) {
+            return NextResponse.json({ error: "Please try to login to correct credentials." }, { status: 400 });
         }
 
-        return NextResponse.json({ message: "Login successful" }, { status: 200 });
+        const data = {
+            user : {
+                id : userData.id
+            }
+        }
+
+        const authToken = jwt.sign(data, process.env.JWT_SECRET)
+        return NextResponse.json({ message: "Login successful", authToken : authToken }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: "Server error", details: error.message }, { status: 500 });
     }

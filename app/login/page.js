@@ -3,11 +3,12 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useAlert } from "@/context/AlertContext";
 
 export default function LoginPage() {
-
   const router = useRouter();
-  const [errors, setErrors] = useState({})
+  const { showAlert } = useAlert()
+  const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
     email: "",
@@ -26,8 +27,8 @@ export default function LoginPage() {
     // Password validation
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } 
-  }
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -57,7 +58,9 @@ export default function LoginPage() {
         return;
       }
 
+      localStorage.setItem('token', data.authToken);
       router.push("/");
+      showAlert("success", "User login successfully.")
     } catch (error) {
       setErrors({ submit: "An error occurred during registration" });
     }
@@ -104,8 +107,8 @@ export default function LoginPage() {
                 onChange={handleChange}
               />
               {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                )}
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
             </div>
             <div>
               <label htmlFor="password" className="sr-only">
@@ -123,8 +126,8 @@ export default function LoginPage() {
                 onChange={handleChange}
               />
               {errors.password && (
-                  <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-                )}
+                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+              )}
             </div>
           </div>
 

@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import { AlertProvider } from "@/context/AlertContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,9 +23,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        <div className="bg-gradient-to-tl">{children}</div>
-        <Footer />
+        <AlertProvider>
+          <div className="bg-gradient-to-tl">{children}</div>
+        </AlertProvider>
       </body>
     </html>
   );
