@@ -19,12 +19,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full`}
       >
         <AlertProvider>
-          <div className="bg-gradient-to-tl">{children}</div>
+          <div className="bg-gradient-to-tl min-h-screen">{children}</div>
         </AlertProvider>
       </body>
     </html>

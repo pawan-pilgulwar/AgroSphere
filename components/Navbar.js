@@ -18,9 +18,9 @@ const Navbar = (props) => {
 
   return (
     <>
-      <nav className="bg-gray-900 text-white pt-1">
+      <nav className="bg-gray-900 text-white pt-1 w-full">
         {/* Top Section */}
-        <section className="flex items-center justify-around bg-gray-900 text-white">
+        <section className="flex items-center justify-between bg-gray-900 text-white max-w-7xl mx-auto px-4">
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center space-x-2 py-3">
@@ -28,9 +28,9 @@ const Navbar = (props) => {
                 <img
                   src="/logo/shopLogo.png"
                   alt="Logo"
-                  className="h-10 w-10"
+                  className="h-8 w-8 md:h-10 md:w-10"
                 />
-                <span className="text-2xl pl-3 font-bold">AgroSphere</span>
+                <span className="text-xl md:text-2xl pl-3 font-bold">AgroSphere</span>
               </div>
             </div>
           </Link>

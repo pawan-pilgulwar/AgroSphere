@@ -4,37 +4,37 @@ import Link from "next/link";
 
 export default function Homepage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen w-full max-w-[1920px] mx-auto">
       {/* Hero Section with Product Showcase */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-green-50 to-white opacity-75 animate-gradient"></div>
-        <div className="container mx-auto px-4 z-10">
+        <div className="container mx-auto px-4 z-10 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-left space-y-8 animate-fade-in">
-              <h1 className="text-6xl font-bold text-gray-800 leading-tight transition-all duration-700 hover:scale-105 hover:text-green-700">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 leading-tight transition-all duration-700 hover:scale-105 hover:text-green-700">
                 Grow Your Farm with
                 <span className="text-green-600"> AgroSphere</span>
               </h1>
-              <p className="text-xl text-gray-600 max-w-xl transition-all duration-500 hover:text-gray-800">
+              <p className="text-lg md:text-xl text-gray-600 max-w-xl transition-all duration-500 hover:text-gray-800">
                 Premium agricultural products and expert guidance to help your
                 farm thrive in the modern age.
               </p>
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="#"
-                  className="px-8 py-3 bg-green-600 text-white rounded-lg transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg hover:translate-y-[-2px]"
+                  className="px-6 md:px-8 py-3 bg-green-600 text-white rounded-lg transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg hover:translate-y-[-2px] text-center"
                 >
                   Explore Products
                 </Link>
                 <Link
                   href="/about"
-                  className="px-8 py-3 bg-white text-green-600 border border-green-600 rounded-lg transition-all duration-300 hover:bg-green-50 hover:scale-105 hover:shadow-lg hover:translate-y-[-2px]"
+                  className="px-6 md:px-8 py-3 bg-white text-green-600 border border-green-600 rounded-lg transition-all duration-300 hover:bg-green-50 hover:scale-105 hover:shadow-lg hover:translate-y-[-2px] text-center"
                 >
                   Learn More
                 </Link>
               </div>
             </div>
-            <div className="relative h-[500px] animate-float">
+            <div className="relative h-[400px] md:h-[500px] animate-float">
               <div className="absolute inset-0 bg-green-100 rounded-3xl transform rotate-6 transition-all duration-500 hover:rotate-3"></div>
               <div className="absolute inset-0 bg-green-200 rounded-3xl transform -rotate-6 transition-all duration-500 hover:-rotate-3"></div>
               <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl overflow-hidden">
