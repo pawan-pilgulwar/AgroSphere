@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import Homepage from "@/components/Homepage";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 // import { useState } from "react";
 import Alerts from "@/components/Alert";
 
@@ -22,10 +20,8 @@ export default function Home() {
 
   return (
     <>
-        <Navbar />
         <Alerts />
         <Homepage />
-        <Footer />
     </>
   );
 }

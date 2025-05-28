@@ -1,12 +1,21 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserDropdonMenu from "@/components/UserDropdonMenu";
-import { useAlert } from "@/context/AlertContext";
 
 const Navbar = (props) => {
   const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden");
-  const { showAlert } = useAlert()
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const storage = localStorage.getItem("token");
+    console.log(storage);
+    if (storage) {
+      setIsLogin(true);
+    } else {
+      false;
+    }
+  });
 
   const showUserDropdown = () => {
     if (UserDropdownDisplay === "hidden") {
@@ -30,7 +39,9 @@ const Navbar = (props) => {
                   alt="Logo"
                   className="h-8 w-8 md:h-10 md:w-10"
                 />
-                <span className="text-xl md:text-2xl pl-3 font-bold">AgroSphere</span>
+                <span className="text-xl md:text-2xl pl-3 font-bold">
+                  AgroSphere
+                </span>
               </div>
             </div>
           </Link>
@@ -182,7 +193,7 @@ const Navbar = (props) => {
         id="userDropdown"
         className={`z-14 ${UserDropdownDisplay} bg-gray-700 text-white rounded-2xl absolute right-8 top-17 border-1 border-gray-600 w-fit`}
       >
-        <UserDropdonMenu />
+        <UserDropdonMenu isLogin={isLogin} setIsLogin={setIsLogin} />
       </div>
     </>
   );

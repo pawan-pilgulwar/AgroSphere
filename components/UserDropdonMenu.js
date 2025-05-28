@@ -1,15 +1,22 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
+import { useAlert } from "@/context/AlertContext";
 
-const UserDropdonMenu = () => {
-  const [isLogin, setIsLogin] = useState(false);
+const UserDropdonMenu = (props) => {
+  const { Alert, showAlert } = useAlert();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    props.setIsLogin(false);
+    showAlert("success", "logout successfully");
+  };
 
   return (
     <div>
       <div className="flex flex-col px-6">
-        {!isLogin && (
+        {!props.isLogin && (
           <Link href="/login">
             <div className="flex items-center py-3 px-2 justify-start">
               <img src="/logo/user.png" alt="" />
@@ -20,7 +27,7 @@ const UserDropdonMenu = () => {
           </Link>
         )}
 
-        {isLogin && (
+        {props.isLogin && (
           <div className="flex items-center py-3 px-2 justify-start">
             <img src="/logo/user.png" alt="" />
             <div className="flex flex-col pl-5 text-lg">
@@ -106,12 +113,15 @@ const UserDropdonMenu = () => {
             </div>
           </Link>
 
-          {isLogin && (
+          {props.isLogin && (
             <>
               <div className="bg-white h-1 mt-2 opacity-20"></div>
 
               <div className="hover:bg-gray-500 py-1 rounded-md">
-                <button className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+                <button
+                  className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center"
+                  onClick={handleLogout}
+                >
                   <Image width={25} height={10} src="/logo/logout.png" alt="" />
                   Logout
                 </button>

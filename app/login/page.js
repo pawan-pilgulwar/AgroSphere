@@ -4,10 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAlert } from "@/context/AlertContext";
+import next from "next";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { showAlert } = useAlert()
+  const { showAlert } = useAlert();
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
@@ -58,9 +59,9 @@ export default function LoginPage() {
         return;
       }
 
-      localStorage.setItem('token', data.authToken);
+      localStorage.setItem("token", data.authToken);
       router.push("/");
-      showAlert("success", "User login successfully.")
+      showAlert("success", "User login successfully.");
     } catch (error) {
       setErrors({ submit: "An error occurred during registration" });
     }
