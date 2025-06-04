@@ -2,11 +2,25 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import User from "@/dataBase/models/user";
 import connectDB from "@/dataBase/dbConnection";
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const schema = z.object({
-  email: z.string().email({ message: "Invalid email format" }),
+  identifier: z
+    .string()
+    .min(3, { message: "Must be at least 3 characters long" })
+    .refine(
+      (val) => {
+        const isUsername = /^[a-zA-Z0-9_]+$/.test(val);
+        const isEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+          val
+        );
+        return isUsername || isEmail;
+      },
+      {
+        message: "Must be a valid username or email",
+      }
+    ),
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters long" })
@@ -18,36 +32,56 @@ const schema = z.object({
 });
 
 export async function POST(request) {
-    try {
-        await connectDB();
-        const userData = await request.json();
+  try {
+    await connectDB();
+    const body = await request.json();
 
-        const validation = schema.safeParse(userData);
-        if (!validation.success) {    
-        return NextResponse.json({ error: validation.error.errors }, { status: 400 });
-        }
-
-        const { email, password } = validation.data;
-
-        const user = await User.findOne({ email });
-        if (!user) {
-        return NextResponse.json({ error: "User not found" }, { status: 404 });
-        }
-        
-        const passwordCompare = await bcrypt.compare(password, user.password)
-        if(!passwordCompare) {
-            return NextResponse.json({ error: "Please try to login to correct credentials." }, { status: 400 });
-        }
-
-        const data = {
-            user : {
-                id : userData.id
-            }
-        }
-
-        const authToken = jwt.sign(data, process.env.JWT_SECRET)
-        return NextResponse.json({ message: "Login successful", authToken : authToken }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ error: "Server error", details: error.message }, { status: 500 });
+    const validation = schema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: validation.error.errors },
+        { status: 400 }
+      );
     }
+
+    const { identifier, password } = validation.data;
+    // Check if identifier is email or username
+    const isEmail = identifier.includes("@");
+    const query = isEmail ? { email: identifier } : { username: identifier };
+
+    // Find user by email or username
+    const user = await User.findOne(query);
+    if (!user) {
+      return NextResponse.json(
+        { error: "Invalid credentials" },
+        { status: 404 }
+      );
+    }
+
+    // Verify password
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return NextResponse.json(
+        { error: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
+
+    const data = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    const authToken = jwt.sign(data, process.env.JWT_SECRET);
+    return NextResponse.json(
+      { message: "Login successful", authToken: authToken },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Internal server error", details: error.message },
+      { status: 500 }
+    );
+  }
 }

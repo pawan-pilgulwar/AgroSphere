@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const { showAlert } = useAlert()
   const [formData, setFormData] = useState({
     // Personal Information
+    username: "",
     name: "",
     email: "",
     phone: "",
@@ -91,18 +92,29 @@ export default function RegisterPage() {
   const validateForm = (formData) => {
     const newErrors = {};
 
+    // Username validation
+    if (!formData.username) {
+      newErrors.username = "Username is required";
+    } else if (formData.username.length < 3) {
+      newErrors.username = "Username must be at least 3 characters long";
+    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
+      newErrors.username = "Username can only contain letters, numbers, and underscores";
+    }
+
     // Name validation
     if (!formData.name) {
       newErrors.name = "Name is required";
     } else if (formData.name.length < 2) {
       newErrors.name = "Name must be at least 2 characters long";
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.name)) {
+      newErrors.name = "Name can only contain letters and spaces";
     }
 
     // Email validation
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(formData.email)) {
         newErrors.email = "Please enter a valid email address";
       }
@@ -249,6 +261,28 @@ export default function RegisterPage() {
               Personal Information
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Username
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  className="mt-1 appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
+                  placeholder="Choose a username"
+                  value={formData.username}
+                  onChange={handleChange}
+                />
+                {errors.username && (
+                  <p className="mt-1 text-sm text-red-600">{errors.username}</p>
+                )}
+              </div>
+
               <div>
                 <label
                   htmlFor="name"

@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
-    email: "",
+    identifier: "",
     password: "",
     rememberMe: false,
   });
@@ -20,9 +20,9 @@ export default function LoginPage() {
   const validateForm = () => {
     const newErrors = {};
 
-    // Email validation
-    if (!formData.email) {
-      newErrors.email = "Email is required";
+    // Identifier validation (username or email)
+    if (!formData.identifier) {
+      newErrors.identifier = "Username or email is required";
     }
 
     // Password validation
@@ -49,7 +49,10 @@ export default function LoginPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          identifier: formData.identifier,
+          password: formData.password,
+        }),
       });
 
       const data = await response.json();
@@ -63,7 +66,7 @@ export default function LoginPage() {
       router.push("/");
       showAlert("success", "User login successfully.");
     } catch (error) {
-      setErrors({ submit: "An error occurred during registration" });
+      setErrors({ submit: "An error occurred during login" });
     }
   };
 
@@ -93,21 +96,21 @@ export default function LoginPage() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
+              <label htmlFor="identifier" className="sr-only">
+                Username or Email
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id="identifier"
+                name="identifier"
+                type="text"
+                autoComplete="username"
                 required
                 className="appearance-none rounded-lg relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm transition-all duration-200"
-                placeholder="Email address"
-                value={formData.email}
+                placeholder="Username or Email"
+                value={formData.identifier}
                 onChange={handleChange}
               />
-              {errors.email && (
+              {errors.identifier && (
                 <p className="mt-1 text-sm text-red-600">{errors.email}</p>
               )}
             </div>
