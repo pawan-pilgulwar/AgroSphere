@@ -186,10 +186,7 @@ const Navbar = (props) => {
       </nav>
 
       {/* user dropdown menu */}
-      <div
-        id="userDropdown"
-        className={`z-14 ${UserDropdownDisplay} bg-gray-700 text-white rounded-2xl absolute right-0 top-17 border-1 border-gray-600 w-fit`}
-      >
+      <div id="userDropdown" className={`${UserDropdownDisplay}`}>
         <UserDropdonMenu isLogin={isLogin} setIsLogin={setIsLogin} />
       </div>
     </>

@@ -7,7 +7,7 @@ import { useAlert } from "@/context/AlertContext";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { showAlert } = useAlert()
+  const { showAlert } = useAlert();
   const [formData, setFormData] = useState({
     // Personal Information
     username: "",
@@ -98,7 +98,8 @@ export default function RegisterPage() {
     } else if (formData.username.length < 3) {
       newErrors.username = "Username must be at least 3 characters long";
     } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
-      newErrors.username = "Username can only contain letters, numbers, and underscores";
+      newErrors.username =
+        "Username can only contain letters, numbers, and underscores";
     }
 
     // Name validation
@@ -223,9 +224,12 @@ export default function RegisterPage() {
         return;
       }
 
-      localStorage.setItem('token', data.authToken);
+      localStorage.setItem("token", data.authToken);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
       router.push("/");
-      showAlert("success", "User created and login successfully.")
+      showAlert("success", "User login successfully.");
     } catch (error) {
       setErrors({ submit: "An error occurred during registration" });
     }

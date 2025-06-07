@@ -63,6 +63,9 @@ export default function LoginPage() {
       }
 
       localStorage.setItem("token", data.authToken);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
       router.push("/");
       showAlert("success", "User login successfully.");
     } catch (error) {
