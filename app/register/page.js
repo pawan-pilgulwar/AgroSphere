@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAlert } from "@/context/AlertContext";
+import axios from "axios";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -209,17 +210,12 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch("/api/users/createuser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await axios.post("/api/users/createuser", formData);
 
-      const data = await response.json();
+      console.log("Response:", response);
+      const data = response.data;
 
-      if (!response.ok) {
+      if (response.status !== 200 || !data.authToken) {
         setErrors({ submit: data.error || "Registration failed" });
         return;
       }
@@ -229,9 +225,17 @@ export default function RegisterPage() {
         window.location.reload();
       }, 500);
       router.push("/");
-      showAlert("success", "User login successfully.");
+      showAlert("success", "User registered successfully.");
     } catch (error) {
-      setErrors({ submit: "An error occurred during registration" });
+      console.log(error);
+      let message = "An unexpected error occurred. Please try again.";
+      if (error.response) {
+        message = error.response.data?.error || message;
+      } else if (error.request) {
+        message = "No response received from the server.";
+      }
+      setErrors({ submit: message });
+      showAlert("error", message);
     }
   };
 

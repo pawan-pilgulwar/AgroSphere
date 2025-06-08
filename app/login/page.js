@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAlert } from "@/context/AlertContext";
 import next from "next";
+import axios from "axios";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,6 +30,8 @@ export default function LoginPage() {
     if (!formData.password) {
       newErrors.password = "Password is required";
     }
+
+    return newErrors;
   };
 
   const handleChange = (e) => {
@@ -42,23 +45,25 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     // Add your login logic here
     try {
-      const response = await fetch("/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          identifier: formData.identifier,
-          password: formData.password,
-        }),
+      const response = await axios.post("/api/users/login", {
+        identifier: formData.identifier,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
       });
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (!response.ok) {
-        setErrors({ submit: data.error || "Login failed" });
+      if (response.status !== 200 || !data.authToken) {
+        setErrors({ submit: data?.error || "Login failed" });
+        showAlert("error", data?.error || "Login failed");
         return;
       }
 
@@ -69,7 +74,20 @@ export default function LoginPage() {
       router.push("/");
       showAlert("success", "User login successfully.");
     } catch (error) {
-      setErrors({ submit: "An error occurred during login" });
+      let message = "An unexpected error occurred. Please try again.";
+
+      if (error.response) {
+        console.log("Login failed:", error.response.data.error);
+        message = error.response.data.error || message;
+      } else if (error.request) {
+        console.log("No response received:", error.request);
+        message = "No response from server. Please try again.";
+      } else {
+        message = error.message || message;
+      }
+
+      setErrors({ submit: message });
+      showAlert("error", message);
     }
   };
 
@@ -114,7 +132,7 @@ export default function LoginPage() {
                 onChange={handleChange}
               />
               {errors.identifier && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                <p className="mt-1 text-sm text-red-600">{errors.identifier}</p>
               )}
             </div>
             <div>
@@ -165,6 +183,10 @@ export default function LoginPage() {
               </Link>
             </div>
           </div>
+
+          {errors.submit && (
+            <p className="text-sm text-red-600 text-center">{errors.submit}</p>
+          )}
 
           <div>
             <button

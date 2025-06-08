@@ -2,15 +2,17 @@ import { NextResponse } from "next/server";
 import { authMiddleware } from "./middlewares/api/authMiddleware";
 
 export const config = {
-  matcher: ["/api/:path*", "/login"],
+  matcher: ["/api/:path*"],
 };
 
-export default function middleware(request) {
-  const authResult = authMiddleware(request);
+export default async function middleware(request) {
+  const authResult = await authMiddleware(request);
   if (
     !authResult?.isValid &&
     !request.nextUrl.pathname.startsWith("/api/users/login") &&
-    !request.nextUrl.pathname.startsWith("/api/users/register")
+    !request.nextUrl.pathname.startsWith("/api/users/createuser") &&
+    !request.nextUrl.pathname.startsWith("/api/products/getproducts") &&
+    !/^\/api\/products\/[^\/]+\/getproduct$/.test(request.nextUrl.pathname)
   ) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }

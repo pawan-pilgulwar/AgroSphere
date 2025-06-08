@@ -5,14 +5,11 @@ import connectDB from "@/dataBase/dbConnection";
 export const GET = async (request, { params }) => {
   try {
     await connectDB();
-    const { productId } = await params;
-    if (!productId) {
-      return NextResponse.json(
-        { error: "Product ID is required" },
-        { status: 400 }
-      );
+    const { slug } = await params;
+    if (!slug) {
+      return NextResponse.json({ error: "Slug is required" }, { status: 400 });
     }
-    const product = await Product.findById(productId);
+    const product = await Product.findOne({ slug: slug });
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }

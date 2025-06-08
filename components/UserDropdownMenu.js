@@ -2,23 +2,38 @@
 import Link from "next/link";
 import React, { use, useEffect, useState } from "react";
 import { useAlert } from "@/context/AlertContext";
+import axios from "axios";
 
-const UserDropdonMenu = (props) => {
-  const { Alert, showAlert } = useAlert();
+const UserDropdownMenu = (props) => {
+  const { showAlert } = useAlert();
   const [user, setUser] = useState(null);
-  const [count, setCount] = useState(null);
 
   async function fetchUser() {
-    const res = await fetch(`/api/users/getuser/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    const data = await res.json();
-    setUser(data.user);
-    setCount(Math.random());
+    try {
+      const res = await axios.get(`/api/users/getuser/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (res.status !== 200) {
+        throw new Error("Failed to fetch user data");
+      }
+      if (!res.data || !res.data.user) {
+        throw new Error("User data not found");
+      }
+      setUser(res.data.user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      if (error.response) {
+        showAlert("error", "Failed to fetch user data");
+      } else if (error.request) {
+        showAlert("error", "No response received from the server");
+      } else {
+        showAlert("error", "An unexpected error occurred");
+      }
+    }
   }
 
   useEffect(() => {
@@ -284,4 +299,4 @@ const UserDropdonMenu = (props) => {
   );
 };
 
-export default UserDropdonMenu;
+export default UserDropdownMenu;

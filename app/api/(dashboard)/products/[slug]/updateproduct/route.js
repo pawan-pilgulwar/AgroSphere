@@ -4,35 +4,57 @@ import Category from "@/dataBase/models/category";
 import Product from "@/dataBase/models/product";
 import User from "@/dataBase/models/user";
 import { Types } from "mongoose";
+import jwt from "jsonwebtoken";
 
 export const PATCH = async (request, { params }) => {
   try {
-    const { productId } = await params;
-    if (!productId || !Types.ObjectId.isValid(productId)) {
+    const token = request.headers.get("authorization")?.split(" ")[1];
+    if (!token) {
       return NextResponse.json(
-        { error: "Product ID is not valid" },
-        { status: 400 }
+        { error: "Authorization token is required" },
+        { status: 401 }
       );
     }
 
-    const data = await request.json();
-    if (!data.user || !Types.ObjectId.isValid(data.user)) {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded || !decoded.user || !decoded.user.id) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+    }
+
+    const userId = decoded.user.id;
+    if (!Types.ObjectId.isValid(userId)) {
+      return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
+    }
+
+    const { slug } = await params;
+    if (!slug) {
       return NextResponse.json(
-        { error: "Invalid or missing user ID" },
+        { error: "Product slug is required" },
         { status: 400 }
       );
     }
 
     await connectDB();
-    const user = await User.findById(data.user);
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 400 });
-    }
-
-    let product = await Product.findById(productId);
+    let product = await Product.findOne({ slug: slug });
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
+    const productId = product._id;
+
+    if (userId.toString() !== product.user.toString()) {
+      return NextResponse.json(
+        { error: "You are not authorized to update this product" },
+        { status: 403 }
+      );
+    }
+    // Parse the request body
+    if (!request.body) {
+      return NextResponse.json(
+        { error: "Request body is required" },
+        { status: 400 }
+      );
+    }
+    const data = await request.json();
 
     let category;
     if (product.category !== data.category || data.newCategory) {
@@ -55,7 +77,7 @@ export const PATCH = async (request, { params }) => {
       }
     }
 
-    data.category = category.id;
+    data.category = category._id;
     delete data.newCategory;
 
     product = await Product.findByIdAndUpdate(productId, data, {

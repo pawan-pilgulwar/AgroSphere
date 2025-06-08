@@ -21,7 +21,7 @@ export default function Homepage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href="#"
+                  href="/products"
                   className="px-6 md:px-8 py-3 bg-green-600 text-white rounded-lg transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg hover:translate-y-[-2px] text-center"
                 >
                   Explore Products

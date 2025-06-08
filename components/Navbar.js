@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import UserDropdonMenu from "@/components/UserDropdonMenu";
+import UserDropdownMenu from "@/components/UserDropdownMenu";
 
 const Navbar = (props) => {
   const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden");
@@ -12,6 +12,9 @@ const Navbar = (props) => {
     if (storage) {
       setIsLogin(true);
     }
+    window.addEventListener("scroll", () => {
+      setUserDropdownDisplay("hidden");
+    });
   });
 
   const showUserDropdown = () => {
@@ -187,7 +190,7 @@ const Navbar = (props) => {
 
       {/* user dropdown menu */}
       <div id="userDropdown" className={`${UserDropdownDisplay}`}>
-        <UserDropdonMenu isLogin={isLogin} setIsLogin={setIsLogin} />
+        <UserDropdownMenu isLogin={isLogin} setIsLogin={setIsLogin} />
       </div>
     </>
   );

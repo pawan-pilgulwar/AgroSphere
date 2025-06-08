@@ -1,19 +1,27 @@
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 
-const validate = (token) => {
-  console.log(token);
-  //   if (!token) {
-  //     return false;
-  //   }
-  //   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  //   if (!decoded || !decoded.user.user.id) {
-  //     return false;
-  //   }
+const validate = async (token) => {
+  if (!token) {
+    return false;
+  }
+  try {
+    const decoded = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET)
+    );
+
+    if (!decoded || !decoded.payload.user.id) {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
   return true;
 };
 
-export const authMiddleware = (request) => {
+export const authMiddleware = async (request) => {
   const token = request.headers.get("authorization")?.split(" ")[1];
+  const isValid = await validate(token);
 
-  return { isValid: validate(token) };
+  return { isValid };
 };

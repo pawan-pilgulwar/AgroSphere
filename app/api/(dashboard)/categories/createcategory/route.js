@@ -6,7 +6,7 @@ export async function POST(request) {
   try {
     await connectDB();
     const body = await request.json();
-    
+
     let category = await Category.findOne({ name: body.name });
     if (category) {
       return NextResponse.json(
@@ -14,9 +14,9 @@ export async function POST(request) {
         { status: 404 }
       );
     }
-    
+
     category = await Category.create(body);
-    await category.save()
+    await category.save();
     return NextResponse.json(
       { message: "Category created successfully", category: category },
       { status: 200 }
