@@ -8,7 +8,7 @@ export const ProductProvider = ({children}) => {
     {
       id: 1,
       name: "Premium Tomato Seeds",
-      price: 4.99,
+      price: 499,
       image: "/images/seeds-and-plants.png",
       category: "Seeds & Plants",
       stock: 50,
@@ -19,7 +19,7 @@ export const ProductProvider = ({children}) => {
     {
       id: 2,
       name: "Organic Compost",
-      price: 24.99,
+      price: 2499,
       image: "/images/fertilizers.webp",
       category: "Fertilizers",
       stock: 40,

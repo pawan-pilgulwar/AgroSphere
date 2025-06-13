@@ -83,7 +83,7 @@ const ProductsPage = () => {
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-green-600 font-bold">
-                      ${product.price}
+                      ₹{product.price}
                     </span>
                     <span className="text-sm text-gray-500">
                       Stock: {product.stock}

@@ -31,8 +31,8 @@
     }
 }
 
-.animate-fade-in {
-    animation: fadeIn 1s ease-out forwards;
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
 @keyframes float {
@@ -51,4 +51,30 @@
 
 .animate-float {
     animation: float 6s ease-in-out infinite;
+}
+
+/* Form transitions */
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
+/* Scale transform on hover */
+.hover\:scale-\[1\.01\]:hover {
+    transform: scale(1.01);
+}
+
+/* Smooth height transition for category form */
+.max-h-\[200px\] {
+    max-height: 200px;
+}
+
+.max-h-0 {
+    max-height: 0;
+}
+
+/* Image preview hover effect */
+.hover\:scale-105:hover {
+    transform: scale(1.05);
 }

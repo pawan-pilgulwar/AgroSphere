@@ -35,7 +35,12 @@ export const POST = async (request) => {
       );
     }
     const data = await request.json();
+    console.log("success");
     data.user = user._id;
+    data.slug = data.name
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9\-]/g, "");
 
     let category;
     if (!data.category) {

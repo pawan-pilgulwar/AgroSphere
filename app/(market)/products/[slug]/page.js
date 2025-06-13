@@ -14,6 +14,11 @@ const ProductDetail = () => {
 
   useEffect(() => {
     console.log(params.slug);
+    if (!params.slug) {
+      console.error("Product slug is missing in the URL parameters.");
+      return;
+    }
+
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
@@ -120,7 +125,7 @@ const ProductDetail = () => {
         <div className="space-y-6">
           <h1 className="text-3xl font-bold">{product.name}</h1>
           <p className="text-2xl font-semibold text-green-600">
-            ${product.price}
+            ₹{product.price}
           </p>
           <div className="space-y-4">
             <p className="text-gray-600">{product.description}</p>

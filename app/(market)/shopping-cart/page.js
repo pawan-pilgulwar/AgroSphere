@@ -166,7 +166,7 @@ const page = () => {
                         
                         <div className="mt-4 md:mt-0">
                           <p className="text-2xl font-bold text-green-600">
-                            ${item.price}
+                            ₹{item.price}
                           </p>
                           <p className="text-sm text-gray-500">
                             {item.stock} {item.unit}s in stock
@@ -197,7 +197,7 @@ const page = () => {
                         
                         <div className="text-right">
                           <p className="text-lg font-semibold text-gray-800">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            ₹{(item.price * item.quantity).toFixed(2)}
                           </p>
                           <button
                             onClick={() => removeItem(item.id)}
@@ -229,20 +229,20 @@ const page = () => {
                   <div className="border-t pt-4 space-y-3">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Subtotal</span>
-                      <span className="font-medium">${subtotal.toFixed(2)}</span>
+                      <span className="font-medium">₹{subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Shipping</span>
-                      <span className="font-medium">${shipping.toFixed(2)}</span>
+                      <span className="font-medium">₹{shipping.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Tax</span>
-                      <span className="font-medium">${tax.toFixed(2)}</span>
+                      <span className="font-medium">₹{tax.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between pt-3 border-t">
                       <span className="text-lg font-semibold">Total</span>
                       <span className="text-lg font-bold text-green-600">
-                        ${total.toFixed(2)}
+                        ₹{total.toFixed(2)}
                       </span>
                     </div>
                   </div>

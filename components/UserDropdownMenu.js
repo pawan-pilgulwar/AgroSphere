@@ -57,7 +57,7 @@ const UserDropdownMenu = (props) => {
         {!props.isLogin && (
           <Link href="/login">
             <div className="flex items-center py-3 px-2 justify-start">
-              <img src="./logo/profile.png" className="h-12 w-12" alt="" />
+              <img src="/logo/profile.png" className="h-12 w-12" alt="" />
               <div className="flex pl-5 text-lg font-bold italic">Sign in</div>
             </div>
           </Link>
@@ -65,7 +65,7 @@ const UserDropdownMenu = (props) => {
 
         {props.isLogin && (
           <div className="flex items-center py-3 px-2 justify-start">
-            <img src="./logo/profile.png" className="h-12 w-12" alt="" />
+            <img src="/logo/profile.png" className="h-12 w-12" alt="" />
             <div className="flex flex-col pl-5 text-lg">
               <span className="h-6 w-6 mb-1 whitespace-nowrap">
                 {user

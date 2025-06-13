@@ -97,7 +97,7 @@ const Navbar = (props) => {
                 </div>
                 <span className="flex px-2 justify-center items-center">
                   MY Cart{" "}
-                  {/* <img className="pl-2" src="./logo/angle-down.png" alt="" /> */}
+                  {/* <img className="pl-2" src="/logo/angle-down.png" alt="" /> */}
                 </span>
               </button>
             </Link>

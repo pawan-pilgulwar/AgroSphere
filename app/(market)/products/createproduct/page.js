@@ -1,0 +1,389 @@
+// i have to work here
+
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
+import { useAlert } from "@/context/AlertContext";
+import UploadImages from "@/components/UploadImages";
+
+const AddProductPage = () => {
+  const router = useRouter();
+  const { showAlert } = useAlert();
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+    category: "",
+    images: [],
+  });
+  const [imageFiles, setImageFiles] = useState([]);
+  const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
+  const [newCategory, setNewCategory] = useState({
+    name: "",
+    description: "",
+  });
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("/api/categories/getallcategories", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.status == 200) {
+        setCategories(response.data.categories);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      showAlert("error", "Failed to fetch categories");
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleNewCategoryChange = (e) => {
+    const { name, value } = e.target;
+    setNewCategory((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // const handleImageChange = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   setImageFiles(files);
+
+  //   // Create preview URLs for the images
+  //   const previewUrls = files.map((file) => URL.createObjectURL(file));
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     images: previewUrls,
+  //   }));
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showAlert("error", "Please login to add a product");
+        router.push("/login");
+        return;
+      }
+
+      // const formDataToSend = new FormData();
+      // formDataToSend.append("name", formData.name);
+      // formDataToSend.append("description", formData.description);
+      // formDataToSend.append("price", formData.price);
+      // formDataToSend.append("stock", formData.stock);
+
+      // if (showNewCategoryForm) {
+      //   formDataToSend.append("newCategory", JSON.stringify(newCategory));
+      // } else {
+      //   formDataToSend.append("category", formData.category);
+      // }
+
+      // // Append each image file
+      // imageFiles.forEach((file) => {
+      //   formDataToSend.append("images", file);
+      // });
+
+      formData.images = imageFiles; // Set the images directly from the state
+      console.log("Form Data to Send:", formData);
+
+      const response = await axios.post(
+        "/api/products/createproduct",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        showAlert("success", "Product added successfully!");
+        router.push("/products");
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
+      showAlert(
+        "error",
+        error.response?.data?.error || "Failed to add product"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8 animate-fadeIn">
+      <h1 className="text-3xl font-bold mb-8 text-center">Add New Product</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg"
+      >
+        <div className="space-y-6">
+          <div className="transition-all duration-300 transform hover:scale-[1.01]">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Product Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+            />
+          </div>
+
+          <div className="transition-all duration-300 transform hover:scale-[1.01]">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              required
+              rows="4"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="transition-all duration-300 transform hover:scale-[1.01]">
+              <label
+                htmlFor="price"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Price (₹)
+              </label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                required
+                min="0"
+                step="0.01"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+              />
+            </div>
+
+            <div className="transition-all duration-300 transform hover:scale-[1.01]">
+              <label
+                htmlFor="stock"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Stock
+              </label>
+              <input
+                type="number"
+                id="stock"
+                name="stock"
+                value={formData.stock}
+                onChange={handleInputChange}
+                required
+                min="0"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+              />
+            </div>
+          </div>
+
+          <div className="transition-all duration-300">
+            <div className="flex items-center justify-between mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Category
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowNewCategoryForm(!showNewCategoryForm)}
+                className="text-sm text-green-600 hover:text-green-700 transition-colors duration-300"
+              >
+                {showNewCategoryForm
+                  ? "Select Existing Category"
+                  : "Add New Category"}
+              </button>
+            </div>
+
+            <div
+              className={`transition-all duration-300 ${
+                showNewCategoryForm
+                  ? "opacity-100 max-h-[200px]"
+                  : "opacity-0 max-h-0 overflow-hidden"
+              }`}
+            >
+              {showNewCategoryForm && (
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    name="name"
+                    value={newCategory.name}
+                    onChange={handleNewCategoryChange}
+                    placeholder="Category Name"
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+                  />
+                  <textarea
+                    name="description"
+                    value={newCategory.description}
+                    onChange={handleNewCategoryChange}
+                    placeholder="Category Description"
+                    required
+                    rows="2"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+                  />
+                </div>
+              )}
+            </div>
+
+            {!showNewCategoryForm && (
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                required
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+              >
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <div className="transition-all duration-300 transform hover:scale-[1.01]">
+            <label
+              htmlFor="images"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Product Images
+            </label>
+            {/* <input
+              type="file"
+              id="images"
+              name="images"
+              onChange={handleImageChange}
+              required
+              multiple
+              accept="image/*"
+              className="mt-1 block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-green-50 file:text-green-700
+                hover:file:bg-green-100
+                transition-all duration-300"
+            /> */}
+            <div
+              className="mt-1 block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-green-50 file:text-green-700
+                hover:file:bg-green-100
+                transition-all duration-300"
+            >
+              <UploadImages setImageFiles={setImageFiles} />
+            </div>
+          </div>
+
+          {formData.images.length > 0 && (
+            <div className="grid grid-cols-3 gap-4">
+              {formData.images.map((url, index) => (
+                <div
+                  key={index}
+                  className="relative aspect-square transition-all duration-300 transform hover:scale-105"
+                >
+                  <img
+                    src={url}
+                    alt={`Preview ${index + 1}`}
+                    className="w-full h-full object-cover rounded-lg shadow-md"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+            >
+              {loading ? (
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Adding...
+                </span>
+              ) : (
+                "Add Product"
+              )}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default AddProductPage;
