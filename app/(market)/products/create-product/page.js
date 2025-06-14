@@ -65,17 +65,27 @@ const AddProductPage = () => {
     }));
   };
 
-  // const handleImageChange = (e) => {
-  //   const files = Array.from(e.target.files);
-  //   setImageFiles(files);
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImageFiles(files);
+  };
 
-  //   // Create preview URLs for the images
-  //   const previewUrls = files.map((file) => URL.createObjectURL(file));
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     images: previewUrls,
-  //   }));
-  // };
+  const uploadOnCloud = async () => {
+    imageFiles.forEach(async (file) => {
+      const data = new FormData();
+      data.append("file", file);
+      data.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      );
+
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        data
+      );
+      formData.images.push(response.data.secure_url);
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,25 +99,17 @@ const AddProductPage = () => {
         return;
       }
 
-      // const formDataToSend = new FormData();
-      // formDataToSend.append("name", formData.name);
-      // formDataToSend.append("description", formData.description);
-      // formDataToSend.append("price", formData.price);
-      // formDataToSend.append("stock", formData.stock);
+      await uploadOnCloud();
+      console.log(formData);
 
-      // if (showNewCategoryForm) {
-      //   formDataToSend.append("newCategory", JSON.stringify(newCategory));
-      // } else {
-      //   formDataToSend.append("category", formData.category);
-      // }
-
-      // // Append each image file
-      // imageFiles.forEach((file) => {
-      //   formDataToSend.append("images", file);
-      // });
-
-      formData.images = imageFiles; // Set the images directly from the state
-      console.log("Form Data to Send:", formData);
+      // Validate form data
+      if (!formData.name || imageFiles.length === 0) {
+        showAlert(
+          "error",
+          "Please fill in all fields and upload at least one image."
+        );
+        return;
+      }
 
       const response = await axios.post(
         "/api/products/createproduct",
@@ -140,7 +142,7 @@ const AddProductPage = () => {
       <h1 className="text-3xl font-bold mb-8 text-center">Add New Product</h1>
       <form
         onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg"
+        className="max-w-2xl mx-auto bg-green-50 rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-lg"
       >
         <div className="space-y-6">
           <div className="transition-all duration-300 transform hover:scale-[1.01]">
@@ -157,7 +159,7 @@ const AddProductPage = () => {
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+              className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
             />
           </div>
 
@@ -175,7 +177,7 @@ const AddProductPage = () => {
               onChange={handleInputChange}
               required
               rows="4"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+              className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
             />
           </div>
 
@@ -196,7 +198,7 @@ const AddProductPage = () => {
                 required
                 min="0"
                 step="0.01"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+                className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
               />
             </div>
 
@@ -215,7 +217,7 @@ const AddProductPage = () => {
                 onChange={handleInputChange}
                 required
                 min="0"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+                className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
               />
             </div>
           </div>
@@ -228,7 +230,7 @@ const AddProductPage = () => {
               <button
                 type="button"
                 onClick={() => setShowNewCategoryForm(!showNewCategoryForm)}
-                className="text-sm text-green-600 hover:text-green-700 transition-colors duration-300"
+                className="text-sm text-green-600 hover:text-green-800 transition-colors duration-200"
               >
                 {showNewCategoryForm
                   ? "Select Existing Category"
@@ -252,7 +254,7 @@ const AddProductPage = () => {
                     onChange={handleNewCategoryChange}
                     placeholder="Category Name"
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+                    className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
                   />
                   <textarea
                     name="description"
@@ -261,7 +263,7 @@ const AddProductPage = () => {
                     placeholder="Category Description"
                     required
                     rows="2"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+                    className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5 te"
                   />
                 </div>
               )}
@@ -273,11 +275,17 @@ const AddProductPage = () => {
                 value={formData.category}
                 onChange={handleInputChange}
                 required
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300"
+                className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
               >
-                <option value="">Select a category</option>
+                <option className="px-3 py-1.5" value="">
+                  Select a category
+                </option>
                 {categories.map((category) => (
-                  <option key={category._id} value={category._id}>
+                  <option
+                    className="px-3 py-1.5"
+                    key={category._id}
+                    value={category._id}
+                  >
                     {category.name}
                   </option>
                 ))}
@@ -292,7 +300,7 @@ const AddProductPage = () => {
             >
               Product Images
             </label>
-            {/* <input
+            <input
               type="file"
               id="images"
               name="images"
@@ -300,25 +308,15 @@ const AddProductPage = () => {
               required
               multiple
               accept="image/*"
-              className="mt-1 block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-md file:border-0
-                file:text-sm file:font-semibold
-                file:bg-green-50 file:text-green-700
-                hover:file:bg-green-100
-                transition-all duration-300"
-            /> */}
-            <div
-              className="mt-1 block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-md file:border-0
-                file:text-sm file:font-semibold
-                file:bg-green-50 file:text-green-700
-                hover:file:bg-green-100
-                transition-all duration-300"
-            >
-              <UploadImages setImageFiles={setImageFiles} />
-            </div>
+              className="mt-1 block text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-md file:border-0
+              file:text-sm file:font-semibold
+              file:bg-white file:text-green-700
+              hover:file:bg-green-400
+              transition-all duration-300"
+            />
+            <UploadImages loading={loading} />
           </div>
 
           {formData.images.length > 0 && (
@@ -342,7 +340,7 @@ const AddProductPage = () => {
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300"
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300"
             >
               Cancel
             </button>

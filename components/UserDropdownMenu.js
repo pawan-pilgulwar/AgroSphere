@@ -85,7 +85,7 @@ const UserDropdownMenu = (props) => {
 
         <div className="flex flex-col py-3 text-xl space-y-1">
           <Link href="#">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -105,7 +105,7 @@ const UserDropdownMenu = (props) => {
           </Link>
 
           <Link href="/shopping-cart">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -126,7 +126,7 @@ const UserDropdownMenu = (props) => {
           </Link>
 
           <Link href="/dashboard/products">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -146,8 +146,28 @@ const UserDropdownMenu = (props) => {
             </div>
           </Link>
 
+          <Link href="/products/create-product">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 5v14M5 12h14" />
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+              </svg>
+              Create Product
+            </div>
+          </Link>
+
           <Link href="#">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -166,7 +186,7 @@ const UserDropdownMenu = (props) => {
           </Link>
 
           <Link href="#">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -186,7 +206,7 @@ const UserDropdownMenu = (props) => {
           </Link>
 
           <Link href="#">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -205,7 +225,7 @@ const UserDropdownMenu = (props) => {
           </Link>
 
           <Link href="#">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -226,7 +246,7 @@ const UserDropdownMenu = (props) => {
           </Link>
 
           <Link href="#">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -245,7 +265,7 @@ const UserDropdownMenu = (props) => {
           </Link>
 
           <Link href="#">
-            <div className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -270,7 +290,7 @@ const UserDropdownMenu = (props) => {
 
               <div className="hover:bg-gray-500 py-1 rounded-md">
                 <button
-                  className="hover:bg-gray-500 py-1 rounded-md flex gap-2 items-center"
+                  className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center"
                   onClick={handleLogout}
                 >
                   <svg

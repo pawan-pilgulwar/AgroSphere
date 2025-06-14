@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { authMiddleware } from "./middlewares/api/authMiddleware";
+import { checkLoginMiddleware } from "./middlewares/frontend/checkLoginMiddleware";
 
 export const config = {
-  matcher: ["/api/:path*"],
+  matcher: ["/api/:path*", "/login", "/register"],
 };
 
 export default async function middleware(request) {
@@ -20,6 +21,15 @@ export default async function middleware(request) {
   // if (lrequest.nextUrl.pathname.startsWith("/login")) {
   //   return NextResponse.redirect(new URL("/register", request.url));
 
+  // }
+
+  // const checkLogin = checkLoginMiddleware(request)
+  // if (
+  //   checkLogin?.isValid &&
+  //   (request.nextUrl.pathname.startsWith("/login") ||
+  //     request.nextUrl.pathname.startsWith("/register"))
+  // ) {
+  //   return NextResponse.redirect(new URL("/", request.url));
   // }
 
   return NextResponse.next();
