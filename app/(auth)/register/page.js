@@ -220,7 +220,6 @@ export default function RegisterPage() {
         return;
       }
 
-      localStorage.setItem("token", data.authToken);
       setTimeout(() => {
         window.location.reload();
       }, 500);

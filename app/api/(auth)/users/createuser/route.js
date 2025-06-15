@@ -3,6 +3,7 @@ import connectDB from "@/dataBase/dbConnection";
 import User from "@/dataBase/models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function POST(request) {
   try {
@@ -39,7 +40,11 @@ export async function POST(request) {
     };
 
     const authToken = jwt.sign(data, process.env.JWT_SECRET);
-    console.log(authToken);
+    const cookiesStore = await cookies();
+    cookiesStore.set("token", authToken, {
+    secure: true,
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  })
     return NextResponse.json(
       { message: "User created successfully", authToken: authToken },
       { status: 200 }

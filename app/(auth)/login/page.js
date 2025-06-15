@@ -67,7 +67,6 @@ export default function LoginPage() {
         return;
       }
 
-      localStorage.setItem("token", data.authToken);
       setTimeout(() => {
         window.location.reload();
       }, 500);

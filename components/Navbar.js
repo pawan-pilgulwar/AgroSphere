@@ -2,13 +2,14 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import UserDropdownMenu from "@/components/UserDropdownMenu";
+import cookie from "js-cookies"
 
 const Navbar = (props) => {
   const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden");
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    const storage = localStorage.getItem("token");
+    const storage = cookie.getItem("token");
     if (storage) {
       setIsLogin(true);
     }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { use, useEffect, useState } from "react";
 import { useAlert } from "@/context/AlertContext";
 import axios from "axios";
+import cookie from "js-cookies"
 
 const UserDropdownMenu = (props) => {
   const { showAlert } = useAlert();
@@ -13,7 +14,7 @@ const UserDropdownMenu = (props) => {
       const res = await axios.get(`/api/users/getuser/`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `bearer ${localStorage.getItem("token")}`,
+          Authorization: `bearer ${cookie.getItem("token")}`,
         },
       });
 
@@ -41,10 +42,13 @@ const UserDropdownMenu = (props) => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    cookie.removeItem("token");
     props.setIsLogin(false);
     setUser(null);
     showAlert("success", "logout successfully");
+    setTimeout(() => {
+        window.location.reload();
+      }, 500);
   };
 
   return (

@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useAlert } from "@/context/AlertContext";
 import UploadImages from "@/components/UploadImages";
+import cookie from "js-cookies"
 
 const AddProductPage = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const AddProductPage = () => {
       const response = await axios.get("/api/categories/getallcategories", {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${cookie.getItem("token")}`,
         },
       });
 
@@ -92,7 +93,7 @@ const AddProductPage = () => {
     setLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = cookie.getItem("token");
       if (!token) {
         showAlert("error", "Please login to add a product");
         router.push("/login");

@@ -4,6 +4,7 @@ import User from "@/dataBase/models/user";
 import connectDB from "@/dataBase/dbConnection";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 const schema = z.object({
   identifier: z
@@ -74,6 +75,12 @@ export async function POST(request) {
     };
 
     const authToken = jwt.sign(data, process.env.JWT_SECRET);
+    const cookiesStore = await cookies();
+    cookiesStore.set("token", authToken, {
+    secure: true,
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  })
+
     return NextResponse.json(
       { message: "Login successful", authToken: authToken },
       { status: 200 }
