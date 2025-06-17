@@ -15,6 +15,18 @@ export async function POST(request) {
       );
     }
 
+    const baseSlug = data.name
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9\-]/g, "");
+
+    let slug = baseSlug;
+    let count = 1;
+    while (await Product.findOne({ slug })) {
+      slug = `${baseSlug}-${count++}`;
+    }
+    data.slug = slug;
+
     category = await Category.create(body);
     await category.save();
     return NextResponse.json(

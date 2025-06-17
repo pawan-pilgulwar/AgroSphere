@@ -37,27 +37,27 @@ export const POST = async (request) => {
     const data = await request.json();
     console.log("success");
     data.user = user._id;
-    data.slug = data.name
+
+    const baseSlug = data.name
       .toLowerCase()
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9\-]/g, "");
 
-    let category;
-    if (!data.category) {
-      category = await Category.create(data.newCategory);
-    } else {
-      category = await Category.findById(data.category);
+    let slug = baseSlug;
+    let count = 1;
+    while (await Product.findOne({ slug })) {
+      slug = `${baseSlug}-${count++}`;
     }
+    data.slug = slug;
 
+    let category = await Category.findById(data.category);
     if (!category) {
       return NextResponse.json(
         { error: "Category not found" },
         { status: 404 }
       );
     }
-
     data.category = category._id;
-    delete data.newCategory;
 
     const product = await Product.create(data);
     category.products.push(product._id);

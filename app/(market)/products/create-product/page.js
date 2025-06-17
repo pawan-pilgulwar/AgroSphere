@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useAlert } from "@/context/AlertContext";
 import UploadImages from "@/components/UploadImages";
-import cookie from "js-cookies"
+import cookie from "js-cookies";
 
 const AddProductPage = () => {
   const router = useRouter();
@@ -22,11 +22,6 @@ const AddProductPage = () => {
     images: [],
   });
   const [imageFiles, setImageFiles] = useState([]);
-  const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
-  const [newCategory, setNewCategory] = useState({
-    name: "",
-    description: "",
-  });
 
   useEffect(() => {
     fetchCategories();
@@ -58,21 +53,13 @@ const AddProductPage = () => {
     }));
   };
 
-  const handleNewCategoryChange = (e) => {
-    const { name, value } = e.target;
-    setNewCategory((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImageFiles(files);
   };
 
   const uploadOnCloud = async () => {
-    imageFiles.forEach(async (file) => {
+    for (const file of imageFiles) {
       const data = new FormData();
       data.append("file", file);
       data.append(
@@ -85,7 +72,7 @@ const AddProductPage = () => {
         data
       );
       formData.images.push(response.data.secure_url);
-    });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -101,7 +88,6 @@ const AddProductPage = () => {
       }
 
       await uploadOnCloud();
-      console.log(formData);
 
       // Validate form data
       if (!formData.name || imageFiles.length === 0) {
@@ -127,6 +113,7 @@ const AddProductPage = () => {
         showAlert("success", "Product added successfully!");
         router.push("/products");
       }
+      console.log(response.data);
     } catch (error) {
       console.error("Error adding product:", error);
       showAlert(
@@ -228,70 +215,28 @@ const AddProductPage = () => {
               <label className="block text-sm font-medium text-gray-700">
                 Category
               </label>
-              <button
-                type="button"
-                onClick={() => setShowNewCategoryForm(!showNewCategoryForm)}
-                className="text-sm text-green-600 hover:text-green-800 transition-colors duration-200"
-              >
-                {showNewCategoryForm
-                  ? "Select Existing Category"
-                  : "Add New Category"}
-              </button>
             </div>
 
-            <div
-              className={`transition-all duration-300 ${
-                showNewCategoryForm
-                  ? "opacity-100 max-h-[200px]"
-                  : "opacity-0 max-h-0 overflow-hidden"
-              }`}
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleInputChange}
+              required
+              className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
             >
-              {showNewCategoryForm && (
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    name="name"
-                    value={newCategory.name}
-                    onChange={handleNewCategoryChange}
-                    placeholder="Category Name"
-                    required
-                    className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
-                  />
-                  <textarea
-                    name="description"
-                    value={newCategory.description}
-                    onChange={handleNewCategoryChange}
-                    placeholder="Category Description"
-                    required
-                    rows="2"
-                    className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5 te"
-                  />
-                </div>
-              )}
-            </div>
-
-            {!showNewCategoryForm && (
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                required
-                className="mt-1 block w-full rounded-md bg-white border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 transition-all duration-300 px-3 py-1.5"
-              >
-                <option className="px-3 py-1.5" value="">
-                  Select a category
+              <option className="px-3 py-1.5" value="">
+                Select a category
+              </option>
+              {categories.map((category) => (
+                <option
+                  className="px-3 py-1.5"
+                  key={category._id}
+                  value={category._id}
+                >
+                  {category.name}
                 </option>
-                {categories.map((category) => (
-                  <option
-                    className="px-3 py-1.5"
-                    key={category._id}
-                    value={category._id}
-                  >
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            )}
+              ))}
+            </select>
           </div>
 
           <div className="transition-all duration-300 transform hover:scale-[1.01]">

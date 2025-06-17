@@ -8,24 +8,23 @@ export const config = {
 
 export default async function middleware(request) {
   // Checking for frontend authentication when routing
-  const checkLogin = await checkLoginMiddleware(request)
-  if (!checkLogin?.isValid && request.nextUrl.pathname.startsWith("/products/create-product")) {
-    return NextResponse.redirect(new URL("/login", request.url))
+  const checkLogin = await checkLoginMiddleware(request);
+  if (
+    !checkLogin?.isValid &&
+    request.nextUrl.pathname.startsWith("/products/create-product")
+  ) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
-  
-  console.log(checkLogin?.isValid, request.nextUrl.pathname);
+
   if (
     checkLogin?.isValid &&
     (request.nextUrl.pathname.startsWith("/login") ||
-    request.nextUrl.pathname.startsWith("/register"))
+      request.nextUrl.pathname.startsWith("/register"))
   ) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-
-
-
-// Checking for backend authentication when api's are requested
+  // Checking for backend authentication when api's are requested
   const authResult = await authMiddleware(request);
   if (
     !authResult?.isValid &&
