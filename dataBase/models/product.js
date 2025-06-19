@@ -22,10 +22,12 @@ const productSchema = new mongoose.Schema(
       required: [true, "Product price is required"],
       min: [0, "Price cannot be negative"],
     },
-    images: [{
-      type: String,
-      required: [true, "At least one product image is required"],
-    }],
+    images: [
+      {
+        type: String,
+        required: [true, "At least one product image is required"],
+      },
+    ],
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
@@ -56,29 +58,29 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
   },
-//     ratings: [{
-//       user: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User",
-//         required: true,
-//       },
-//       rating: {
-//         type: Number,
-//         required: true,
-//         min: 1,
-//         max: 5,
-//       },
-//       review: String,
-//       date: {
-//         type: Date,
-//         default: Date.now,
-//       },
-//     }],
-//     averageRating: {
-//       type: Number,
-//       default: 0,
-//     },
-//   },
+  //     ratings: [{
+  //       user: {
+  //         type: mongoose.Schema.Types.ObjectId,
+  //         ref: "User",
+  //         required: true,
+  //       },
+  //       rating: {
+  //         type: Number,
+  //         required: true,
+  //         min: 1,
+  //         max: 5,
+  //       },
+  //       review: String,
+  //       date: {
+  //         type: Date,
+  //         default: Date.now,
+  //       },
+  //     }],
+  //     averageRating: {
+  //       type: Number,
+  //       default: 0,
+  //     },
+  //   },
   {
     timestamps: true,
   }
@@ -101,6 +103,7 @@ const productSchema = new mongoose.Schema(
 //   next();
 // });
 
-const Product = mongoose.models.Product || mongoose.model("Product", productSchema);
+const Product =
+  mongoose.models.Product || mongoose.model("Product", productSchema);
 
-export default Product; 
+export default Product;

@@ -5,7 +5,7 @@ import { Types } from "mongoose";
 
 export const GET = async (request, { params }) => {
   try {
-    const { categoryId } = params;
+    const { categoryId } = await params;
 
     if (!categoryId || !Types.ObjectId.isValid(categoryId)) {
       return NextResponse.json(

@@ -11,6 +11,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const { showAlert } = useAlert();
+  const [category, setcategory] = useState({});
 
   useEffect(() => {
     console.log(params.slug);
@@ -38,6 +39,21 @@ const ProductDetail = () => {
           throw new Error("Products not found");
         }
         setProduct(data.product);
+
+        try {
+          const categoryRespnse = await axios.get(
+            `/api/categories/${data.product.category}/getcategory`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          setcategory(categoryRespnse.data.category);
+        } catch (error) {
+          console.log(error);
+        }
+
         setSelectedImage(0); // Reset selected image when product changes
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -99,14 +115,14 @@ const ProductDetail = () => {
             <img
               src={product.images[selectedImage]}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain px-10"
             />
           </div>
           <div className="grid grid-cols-4 gap-2">
             {product.images.map((image, index) => (
               <div
                 key={index}
-                className={`relative h-24 cursor-pointer rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105 ${
+                className={`relative h-24 p-2 cursor-pointer rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105 ${
                   selectedImage === index ? "ring-2 ring-green-500" : ""
                 }`}
                 onClick={() => setSelectedImage(index)}
@@ -131,7 +147,7 @@ const ProductDetail = () => {
             <p className="text-gray-600">{product.description}</p>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-500">
-                Category: {product.category?.name}
+                Category: {category?.name}
               </span>
               <span className="text-sm text-gray-500">
                 Stock: {product.stock}
