@@ -5,94 +5,10 @@ import Link from "next/link";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import cookies from "js-cookies";
 
 // Sample product data organized by category
-const productsByCategory = {
-  // "seeds-and-plants": {
-  //   title: "Seeds & Plants",
-  //   description: "High-quality seeds and plants for your farm",
-  //   image: "/images/seeds.jpg",
-  //   subcategories: {
-  //     "vegetable-seeds": {
-  //       name: "Vegetable Seeds",
-  //       products: [
-  //         {
-  //           id: 1,
-  //           name: "Premium Tomato Seeds",
-  //           price: 4.99,
-  //           image: "/images/products/tomato-seeds.jpg",
-  //           description: "High-yield, disease-resistant tomato seeds",
-  //           rating: 4.8,
-  //           reviews: 120,
-  //           stock: 50,
-  //         },
-  //         {
-  //           id: 2,
-  //           name: "Organic Carrot Seeds",
-  //           price: 3.99,
-  //           image: "/images/products/carrot-seeds.jpg",
-  //           description: "Certified organic carrot seeds",
-  //           rating: 4.6,
-  //           reviews: 85,
-  //           stock: 30,
-  //         },
-  //       ],
-  //     },
-  //     "fruit-plants": {
-  //       name: "Fruit Plants",
-  //       products: [
-  //         {
-  //           id: 3,
-  //           name: "Strawberry Plants",
-  //           price: 8.99,
-  //           image: "/images/products/strawberry.jpg",
-  //           description: "Ever-bearing strawberry plants",
-  //           rating: 4.7,
-  //           reviews: 95,
-  //           stock: 25,
-  //         },
-  //       ],
-  //     },
-  //   },
-  // },
-  // fertilizers: {
-  //   title: "Fertilizers",
-  //   description: "Premium fertilizers for optimal plant growth",
-  //   image: "/images/fertilizers.jpg",
-  //   subcategories: {
-  //     "organic-fertilizers": {
-  //       name: "Organic Fertilizers",
-  //       products: [
-  //         {
-  //           id: 4,
-  //           name: "Organic Compost",
-  //           price: 24.99,
-  //           image: "/images/products/compost.jpg",
-  //           description: "Rich organic compost for soil enrichment",
-  //           rating: 4.7,
-  //           reviews: 95,
-  //           stock: 40,
-  //         },
-  //       ],
-  //     },
-  //     "chemical-fertilizers": {
-  //       name: "Chemical Fertilizers",
-  //       products: [
-  //         {
-  //           id: 5,
-  //           name: "NPK Fertilizer",
-  //           price: 19.99,
-  //           image: "/images/products/npk.jpg",
-  //           description: "Balanced NPK fertilizer for all plants",
-  //           rating: 4.5,
-  //           reviews: 110,
-  //           stock: 60,
-  //         },
-  //       ],
-  //     },
-  //   },
-  // },
-};
+const productsByCategory = {};
 
 export default function CategoryPage() {
   const params = useParams();
@@ -155,14 +71,12 @@ export default function CategoryPage() {
         throw new Error("Products not found");
       }
 
-      console.log(category);
       const filteredProducts = data.products.filter(
         (product) => product.category === category._id
       );
 
       setallProducts(filteredProducts);
       setLoading(false);
-      console.log(filteredProducts);
     } catch (error) {
       console.log("Error fetching products:", error);
       showAlert?.("error", error.message || "An unexpected error occurred");
@@ -198,6 +112,26 @@ export default function CategoryPage() {
       </div>
     );
   }
+
+  const addToCart = async (product) => {
+    try {
+      await axios.post(
+        "/api/cart/add",
+        {
+          productId: product._id,
+          quantity: 1,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.getItem("token")}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (
     !loading &&
@@ -242,8 +176,28 @@ export default function CategoryPage() {
             {allProducts.map((product) => (
               <div
                 key={product._id}
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 relative"
               >
+                {/* Favourite Button */}
+                <button
+                  className="absolute right-1 z-10 bg-white rounded-full p-2 shadow-md hover:bg-red-100 transition-colors group"
+                  aria-label="Add to favourites"
+                >
+                  <svg
+                    className="w-6 h-6 text-gray-400 group-hover:text-red-500 transition-colors"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
+                    />
+                  </svg>
+                </button>
                 <div className="flex flex-col md:flex-row">
                   {/* Product Image */}
                   <div className="relative md:h-48 md:w-48 flex-shrink-0">
@@ -269,7 +223,7 @@ export default function CategoryPage() {
                         </h3>
                         <p className="text-gray-600">{product.description}</p>
                       </div>
-                      <div className="mt-4 md:mt-0">
+                      <div className="mt-4 md:mt-5">
                         <span className="text-3xl font-bold text-green-600">
                           ${product.price}
                         </span>
@@ -304,7 +258,10 @@ export default function CategoryPage() {
                       <span className="text-gray-600">
                         In Stock: {product.stock} units
                       </span>
-                      <button className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                      <button
+                        className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                        onClick={() => addToCart(product)}
+                      >
                         Add to Cart
                       </button>
                     </div>

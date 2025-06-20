@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { useAlert } from "@/context/AlertContext";
+import cookies from "js-cookies";
 
 const ProductDetail = () => {
   const params = useParams();
@@ -83,6 +84,26 @@ const ProductDetail = () => {
     fetchProduct();
   }, [params.slug]);
 
+  const addToCart = async (product) => {
+    try {
+      await axios.post(
+        "/api/cart/add",
+        {
+          productId: product._id,
+          quantity: 1,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.getItem("token")}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -112,6 +133,26 @@ const ProductDetail = () => {
         {/* Product Images */}
         <div className="space-y-4">
           <div className="relative h-96 w-full rounded-lg overflow-hidden">
+            {/* Favourite Button */}
+            <button
+              className="absolute top-4 right-4 z-10 bg-white rounded-full p-3 shadow-md hover:bg-red-100 transition-colors group"
+              aria-label="Add to favourites"
+            >
+              <svg
+                className="w-7 h-7 text-gray-400 group-hover:text-red-500 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
+                />
+              </svg>
+            </button>
             <img
               src={product.images[selectedImage]}
               alt={product.name}
@@ -160,7 +201,12 @@ const ProductDetail = () => {
             )}
           </div>
 
-          <button className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 active:scale-95">
+          <button
+            className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 active:scale-95"
+            onClick={() => {
+              addToCart(product);
+            }}
+          >
             Add to Cart
           </button>
         </div>

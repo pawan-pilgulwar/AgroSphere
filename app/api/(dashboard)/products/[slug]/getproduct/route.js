@@ -9,7 +9,8 @@ export const GET = async (request, { params }) => {
     if (!slug) {
       return NextResponse.json({ error: "Slug is required" }, { status: 400 });
     }
-    const product = await Product.findOne({ slug: slug });
+    const product =
+      (await Product.findOne({ slug: slug })) || (await Product.findById(slug));
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
