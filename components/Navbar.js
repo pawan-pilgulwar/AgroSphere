@@ -2,11 +2,16 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import UserDropdownMenu from "@/components/UserDropdownMenu";
-import cookie from "js-cookies"
+import cookie from "js-cookies";
+import axios from "axios";
+import { usePathname } from "next/navigation";
+import { useCart } from "@/context/CartContext";
 
 const Navbar = (props) => {
   const [UserDropdownDisplay, setUserDropdownDisplay] = useState("hidden");
   const [isLogin, setIsLogin] = useState(false);
+  const { cartCount, fetchCart } = useCart();
+  const pathname = usePathname();
 
   useEffect(() => {
     const storage = cookie.getItem("token");
@@ -17,6 +22,10 @@ const Navbar = (props) => {
       setUserDropdownDisplay("hidden");
     });
   });
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   const showUserDropdown = () => {
     if (UserDropdownDisplay === "hidden") {
@@ -93,7 +102,7 @@ const Navbar = (props) => {
                 <div className="relative">
                   <img className="h-7 w-7" src="/logo/cart.png" alt="" />
                   <span className="absolute -top-1.5 -right-1.5 bg-red-500 px-1 text-xs rounded-full">
-                    3
+                    {cartCount}
                   </span>
                 </div>
                 <span className="flex px-2 justify-center items-center">

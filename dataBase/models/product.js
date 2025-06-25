@@ -58,50 +58,10 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
   },
-  //     ratings: [{
-  //       user: {
-  //         type: mongoose.Schema.Types.ObjectId,
-  //         ref: "User",
-  //         required: true,
-  //       },
-  //       rating: {
-  //         type: Number,
-  //         required: true,
-  //         min: 1,
-  //         max: 5,
-  //       },
-  //       review: String,
-  //       date: {
-  //         type: Date,
-  //         default: Date.now,
-  //       },
-  //     }],
-  //     averageRating: {
-  //       type: Number,
-  //       default: 0,
-  //     },
-  //   },
   {
     timestamps: true,
   }
 );
-
-// // Create indexes for better query performance
-// productSchema.index({ name: 1 });
-// productSchema.index({ slug: 1 });
-// productSchema.index({ category: 1 });
-// productSchema.index({ featured: 1 });
-// productSchema.index({ isActive: 1 });
-
-// // Calculate average rating before saving
-// productSchema.pre("save", function (next) {
-//   if (this.ratings.length > 0) {
-//     this.averageRating =
-//       this.ratings.reduce((acc, item) => acc + item.rating, 0) /
-//       this.ratings.length;
-//   }
-//   next();
-// });
 
 const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);

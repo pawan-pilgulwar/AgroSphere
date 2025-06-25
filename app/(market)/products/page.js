@@ -5,12 +5,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAlert } from "@/context/AlertContext";
 import cookies from "js-cookies";
+import { useCart } from "@/context/CartContext";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { showAlert } = useAlert();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,25 +53,25 @@ const ProductsPage = () => {
     fetchProducts();
   }, []);
 
-  const addToCart = async (product) => {
-    try {
-      await axios.post(
-        "/api/cart/add",
-        {
-          productId: product._id,
-          quantity: 1,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.getItem("token")}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const addToCart = async (product) => {
+  //   try {
+  //     await axios.post(
+  //       "/api/cart/add",
+  //       {
+  //         productId: product._id,
+  //         quantity: 1,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${cookies.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   if (loading) {
     return (

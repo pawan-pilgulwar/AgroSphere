@@ -3,7 +3,7 @@ import "./globals.css";
 import { AlertProvider } from "@/context/AlertContext";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-
+import { CartProvider } from "@/context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +27,11 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full`}
       >
         <AlertProvider>
-          <Navbar />
-          <div className="bg-gradient-to-tl min-h-screen">{children}</div>
-          <Footer />
+          <CartProvider>
+            <Navbar />
+            <div className="bg-gradient-to-tl min-h-screen">{children}</div>
+            <Footer />
+          </CartProvider>
         </AlertProvider>
       </body>
     </html>

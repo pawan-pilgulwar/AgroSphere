@@ -7,7 +7,7 @@ export const POST = async (req) => {
   try {
     const { productId } = await req.json();
 
-    const token = request.headers.get("authorization")?.split(" ")[1];
+    const token = req.headers.get("authorization")?.split(" ")[1];
     if (!token) {
       return NextResponse.json(
         { error: "Authorization token is required" },
@@ -21,14 +21,9 @@ export const POST = async (req) => {
     }
 
     const userId = decoded.user.id;
-    if (!Types.ObjectId.isValid(userId)) {
-      return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
-    }
 
     await connectDB();
-    const cart =
-      (await Cart.findOne({ user: userId })) ||
-      new Cart({ user: userId, items: [] });
+    const cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
       return NextResponse.json(
@@ -37,15 +32,14 @@ export const POST = async (req) => {
       );
     }
 
-    const existingItem = cart.items.find(
-      (item) => item.product.toString() === productId
+    cart.items = cart.items.filter(
+      (item) => item.product.toString() !== productId
     );
 
-    existingItem.quantity -= quantity;
-    cart.items.filter((item) => item.quantity > 0);
+    // cart.items.filter((item) => item.quantity > 0);
 
     await cart.save();
-    return NextResponse.json({ message: "Cart updated", cart });
+    return NextResponse.json({ message: "Cart updated", cart, removedItem });
   } catch (error) {
     return NextResponse.json(
       { error: "Internal server error", details: error.message },

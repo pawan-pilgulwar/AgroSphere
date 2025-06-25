@@ -4,180 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import cookies from "js-cookies";
+import { useCart } from "@/context/CartContext";
 
 const page = () => {
-  const [cartItems, setCartItems] = useState([
-    // {
-    //   id: 1,
-    //   name: "Premium Tomato Seeds",
-    //   price: 4.99,
-    //   image:
-    //     "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop&q=60",
-    //   quantity: 2,
-    //   category: "Seeds & Plants",
-    //   stock: 50,
-    //   unit: "pack",
-    //   bestPlantingSeason: "Spring",
-    //   organic: true,
-    // },
-    // {
-    //   id: 2,
-    //   name: "Organic Compost",
-    //   price: 24.99,
-    //   image:
-    //     "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=500&auto=format&fit=crop&q=60",
-    //   quantity: 1,
-    //   category: "Fertilizers",
-    //   stock: 40,
-    //   unit: "bag",
-    //   weight: "20 lbs",
-    //   organic: true,
-    // },
-    // {
-    //   id: 3,
-    //   name: "Strawberry Plants",
-    //   price: 8.99,
-    //   image:
-    //     "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&auto=format&fit=crop&q=60",
-    //   quantity: 3,
-    //   category: "Seeds & Plants",
-    //   stock: 25,
-    //   unit: "plant",
-    //   bestPlantingSeason: "Spring",
-    //   organic: false,
-    // },
-  ]);
-
-  const [itemCount, setItemCount] = useState(0);
+  const {
+    cartItems,
+    cartCount,
+    loading,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    fetchCart,
+  } = useCart();
   const [deliveryOption, setDeliveryOption] = useState("standard");
-  const [Cart, setCart] = useState(null);
-  const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getCart = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`/api/cart/getcart`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.getItem("token")}`,
-          },
-        });
-
-        const data = response.data.cart;
-        setCart(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getCart();
-  }, []);
-
-  useEffect(() => {
-    const getCartItems = async () => {
-      try {
-        setLoading(true);
-        for (const element of Cart.items) {
-          const response = await axios.get(
-            `/api/products/${element.product}/getproduct`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          response.data.product.quantity = element.quantity;
-
-          const categoryResponse = await axios.get(
-            `/api/categories/${response.data.product.category}/getcategory`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          response.data.product.category = categoryResponse.data.category;
-
-          setCartItems((prev) => [...prev, response.data.product]);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getCartItems();
-  }, [Cart]);
-
-  const updateQuantity = async (id, newQuantity) => {
-    if (newQuantity <= 0) return;
-
-    const item = cartItems.find((item) => item._id === id);
-    if (!item) return;
-
-    if (newQuantity > item.stock) {
-      alert(`Only ${item.stock} ${item.unit}s available in stock`);
-      return;
-    }
-
-    try {
-      const response = await axios.put(
-        "/api/cart/update",
-        {
-          productId: id,
-          quantity: newQuantity,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.getItem("token")}`,
-          },
-        }
-      );
-
-      setCartItems((items) =>
-        items.map((item) =>
-          item._id === id ? { ...item, quantity: newQuantity } : item
-        )
-      );
-    } catch (error) {
-      console.log("Failed to update cart item", error);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (Array.isArray(cartItems)) {
-  //     const totalCount = cartItems.reduce(
-  //       (sum, item) => sum + item.quantity,
-  //       0
-  //     );
-  //     setItemCount(totalCount);
-  //   }
-  // }, [cartItems]);
-
-  // const updateQuantity = (id, newQuantity) => {
-  //   if (newQuantity > 0) {
-  //     setCartItems((items) =>
-  //       items.map((item) => {
-  //         if (item.id === id) {
-  //           if (newQuantity <= item.stock) {
-  //             return { ...item, quantity: newQuantity };
-  //           } else {
-  //             alert(`Only ${item.stock} ${item.unit}s available in stock`);
-  //             return item;
-  //           }
-  //         }
-  //         return item;
-  //       })
-  //     );
-  //   }
-  // };
-
-  // const removeItem = (id) => {
-  //   setCartItems((items) => items.filter((item) => item.id !== id));
-  // };
+    fetchCart();
+  }, [])
+  
 
   const calculateShipping = () => {
     const baseShipping = 5.99;
@@ -185,15 +29,12 @@ const page = () => {
       ? cartItems.reduce((sum, item) => {
           const weight = parseFloat(item.weight);
           const quantity = Number(item.quantity) || 0;
-
-          // If weight is a valid number, use it; otherwise default to 1
           if (!isNaN(weight)) {
             return sum + weight * quantity;
           }
           return sum + quantity;
         }, 0)
       : 0;
-
     if (deliveryOption === "express") {
       return baseShipping * 2;
     }
@@ -211,7 +52,7 @@ const page = () => {
   const shipping = calculateShipping();
   const total = subtotal + shipping + tax;
 
-  if (Loading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <svg
@@ -282,9 +123,9 @@ const page = () => {
                     <div className="flex flex-col md:flex-row gap-6">
                       <div className="flex-shrink-0">
                         <img
-                          src={item.image}
+                          src={item.images[0]}
                           alt={item.name}
-                          className="w-32 h-32 rounded-lg object-cover"
+                          className="w-32 h-32 rounded-lg object-contain"
                         />
                       </div>
 
@@ -364,7 +205,7 @@ const page = () => {
                               ₹{(item.price * item.quantity).toFixed(2)}
                             </p>
                             <button
-                              onClick={() => removeItem(item._id)}
+                              onClick={() => removeFromCart(item._id)}
                               className="text-sm text-red-500 hover:text-red-700"
                             >
                               Remove

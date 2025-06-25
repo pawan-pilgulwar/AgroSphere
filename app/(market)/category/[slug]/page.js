@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import cookies from "js-cookies";
+import { useCart } from "@/context/CartContext";
 
 // Sample product data organized by category
 const productsByCategory = {};
@@ -17,6 +18,7 @@ export default function CategoryPage() {
   const [categories, setcategories] = useState([]);
   const [allProducts, setallProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { addToCart } = useCart()
 
   useEffect(() => {
     // Fetch categories only once on mount
@@ -113,25 +115,25 @@ export default function CategoryPage() {
     );
   }
 
-  const addToCart = async (product) => {
-    try {
-      await axios.post(
-        "/api/cart/add",
-        {
-          productId: product._id,
-          quantity: 1,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookies.getItem("token")}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const addToCart = async (product) => {
+  //   try {
+  //     await axios.post(
+  //       "/api/cart/add",
+  //       {
+  //         productId: product._id,
+  //         quantity: 1,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${cookies.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   if (
     !loading &&
