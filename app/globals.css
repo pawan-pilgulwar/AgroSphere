@@ -1,80 +1,80 @@
 @import "tailwindcss";
 
 @keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
+  0% {
+    background-position: 0% 50%;
+  }
 
-    50% {
-        background-position: 100% 50%;
-    }
+  50% {
+    background-position: 100% 50%;
+  }
 
-    100% {
-        background-position: 0% 50%;
-    }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 15s ease infinite;
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fadeIn {
-    animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
+  0% {
+    transform: translateY(0px);
+  }
 
-    50% {
-        transform: translateY(-20px);
-    }
+  50% {
+    transform: translateY(-20px);
+  }
 
-    100% {
-        transform: translateY(0px);
-    }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .animate-float {
-    animation: float 6s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 /* Form transitions */
 .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
 /* Scale transform on hover */
 .hover\:scale-\[1\.01\]:hover {
-    transform: scale(1.01);
+  transform: scale(1.01);
 }
 
 /* Smooth height transition for category form */
 .max-h-\[200px\] {
-    max-height: 200px;
+  max-height: 200px;
 }
 
 .max-h-0 {
-    max-height: 0;
+  max-height: 0;
 }
 
 /* Image preview hover effect */
 .hover\:scale-105:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }

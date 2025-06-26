@@ -53,26 +53,6 @@ const ProductsPage = () => {
     fetchProducts();
   }, []);
 
-  // const addToCart = async (product) => {
-  //   try {
-  //     await axios.post(
-  //       "/api/cart/add",
-  //       {
-  //         productId: product._id,
-  //         quantity: 1,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${cookies.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
