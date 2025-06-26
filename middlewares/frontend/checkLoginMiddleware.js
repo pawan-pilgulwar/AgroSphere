@@ -1,16 +1,22 @@
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 
 export async function checkLoginMiddleware(request) {
   const token = request.cookies.get("token")?.value;
 
   if (!token) return { isValid: false };
 
-  return { isValid: true };
+  try {
+    const decoded = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET)
+    );
 
-  // try {
-  //   const decoded = jwt.verify(token?.value, process.env.JWT_SECRET);
-  //   return { isValid: true, user: decoded };
-  // } catch (err) {
-  //   return { isValid: false };
-  // }
+    if (!decoded || !decoded.payload.user.id) {
+      return { isValid: false };
+    }
+
+    return { isValid: true, userId };
+  } catch (error) {
+    return { isValid: false };
+  }
 }

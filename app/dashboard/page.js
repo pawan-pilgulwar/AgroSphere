@@ -146,9 +146,7 @@ const Dashboard = () => {
         <div className="mb-8 bg-gradient-to-r from-green-600 to-blue-300 rounded-2xl p-6 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-10"></div>
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-2">
-              Welcome back, Rajesh! 🌾
-            </h2>
+            <h2 className="text-3xl font-bold mb-2">Welcome back, Pawan! 🌾</h2>
             <p className="text-green-100 mb-4">
               Here's what's happening on your farm today
             </p>

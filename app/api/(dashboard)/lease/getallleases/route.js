@@ -1,6 +1,7 @@
 import Lease from "@/dataBase/models/lease";
 import { NextResponse } from "next/server";
 import connectDB from "@/dataBase/dbConnection";
+import User from "@/dataBase/models/user";
 
 export async function GET() {
   try {
@@ -14,4 +15,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-} 
+}

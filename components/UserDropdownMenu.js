@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { use, useEffect, useState } from "react";
 import { useAlert } from "@/context/AlertContext";
 import axios from "axios";
-import cookie from "js-cookies"
+import cookie from "js-cookies";
 
 const UserDropdownMenu = (props) => {
   const { showAlert } = useAlert();
@@ -47,8 +47,8 @@ const UserDropdownMenu = (props) => {
     setUser(null);
     showAlert("success", "logout successfully");
     setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      window.location.reload();
+    }, 500);
   };
 
   return (
@@ -68,21 +68,23 @@ const UserDropdownMenu = (props) => {
         )}
 
         {props.isLogin && (
-          <div className="flex items-center py-3 px-2 justify-start">
-            <img src="/logo/profile.png" className="h-12 w-12" alt="" />
-            <div className="flex flex-col pl-5 text-lg">
-              <span className="h-6 w-6 mb-1 whitespace-nowrap">
-                {user
-                  ? user.name.split(" ").length >= 3
-                    ? `${user.name.split(" ")[0]} ${user.name.split(" ")[2]}`
-                    : user.name
-                  : "User Name"}
-              </span>
-              <span className="text-gray-400">
-                {user ? user.username : "Email"}
-              </span>
+          <Link href="/dashboard">
+            <div className="flex items-center py-3 px-2 justify-start">
+              <img src="/logo/profile.png" className="h-12 w-12" alt="" />
+              <div className="flex flex-col pl-5 text-lg">
+                <span className="h-6 w-6 mb-1 whitespace-nowrap">
+                  {user
+                    ? user.name.split(" ").length >= 3
+                      ? `${user.name.split(" ")[0]} ${user.name.split(" ")[2]}`
+                      : user.name
+                    : "User Name"}
+                </span>
+                <span className="text-gray-400">
+                  {user ? user.username : "Email"}
+                </span>
+              </div>
             </div>
-          </div>
+          </Link>
         )}
 
         <div className="bg-white h-1 opacity-20"></div>
