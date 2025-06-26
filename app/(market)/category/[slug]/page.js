@@ -160,9 +160,9 @@ export default function CategoryPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <section className="relative py-20 bg-gradient-to-r from-green-400 to-blue-300 text-black">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             {category.name}
@@ -172,13 +172,13 @@ export default function CategoryPage() {
       </section>
 
       {/* Products Section */}
-      <section className="py-12">
+      <section className="py-12 flex-1">
         <div className="container mx-auto px-4">
           <div className="flex flex-col space-y-8">
             {allProducts.map((product) => (
               <div
                 key={product._id}
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 relative"
+                className="bg-green-100 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 relative"
               >
                 {/* Favourite Button */}
                 <button
@@ -276,20 +276,20 @@ export default function CategoryPage() {
       </section>
 
       {/* Quick Navigation */}
-      <section className="bg-white py-8 border-t">
+      <section className="py-8 border-t mt-auto">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-4">
-            {Object.entries(productsByCategory).map(([catSlug, cat]) => (
+            {categories.map((cat) => (
               <Link
-                key={catSlug}
-                href={`/category/${catSlug}`}
+                key={cat.slug}
+                href={`/category/${cat.slug}`}
                 className={`px-4 py-2 rounded-lg transition-colors ${
-                  catSlug === categorySlug
+                  cat.slug === categorySlug
                     ? "bg-green-600 text-white"
                     : "bg-gray-100 text-gray-800 hover:bg-gray-200"
                 }`}
               >
-                {cat.title}
+                {cat.name}
               </Link>
             ))}
           </div>

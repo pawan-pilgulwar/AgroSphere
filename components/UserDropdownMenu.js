@@ -170,6 +170,26 @@ const UserDropdownMenu = (props) => {
             </div>
           </Link>
 
+          <Link href="/lease-market/create-lease">
+            <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 5v14M5 12h14" />
+                <path d="M3 7h18M3 11h18M3 15h18M3 19h18" />
+              </svg>
+              Create Lease
+            </div>
+          </Link>
+
           <Link href="#">
             <div className="hover:bg-gray-500 py-1 px-1 rounded-md flex gap-2 items-center">
               <svg

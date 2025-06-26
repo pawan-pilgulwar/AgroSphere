@@ -1,13 +1,13 @@
 "use client";
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function LeaseMarketPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen text-black">
       {/* Hero Section */}
-      <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[40vh] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/farm.jpg"
@@ -24,6 +24,15 @@ export default function LeaseMarketPage() {
             Find and list agricultural equipment, land, and resources for lease
           </p>
         </div>
+        {/* Explore All Button */}
+        <div className="relative z-10 text-center text-white mt-4">
+          <Link
+            href="/lease-market/all-leases"
+            className="inline-block px-5 py-2.5 bg-green-300 text-black rounded-lg transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg font-semibold text-lg"
+          >
+            Explore All Leases
+          </Link>
+        </div>
       </section>
 
       {/* Main Content */}
@@ -36,20 +45,20 @@ export default function LeaseMarketPage() {
                 title: "Equipment Lease",
                 description: "Rent agricultural machinery and tools",
                 image: "/images/equipment.jpg",
-                link: "/lease-market/equipment"
+                link: "/lease-market/equipment",
               },
               {
                 title: "Land Lease",
                 description: "Find or list agricultural land for lease",
                 image: "/images/land.jpg",
-                link: "/lease-market/land"
+                link: "/lease-market/land",
               },
               {
                 title: "Storage Lease",
                 description: "Rent storage facilities for your produce",
                 image: "/images/storage.jpg",
-                link: "/lease-market/storage"
-              }
+                link: "/lease-market/storage",
+              },
             ].map((category, index) => (
               <Link
                 key={index}
@@ -61,7 +70,7 @@ export default function LeaseMarketPage() {
                     src={category.image}
                     alt={category.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110 opacity-90"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 transition-opacity duration-300 group-hover:opacity-80"></div>
                 </div>
@@ -82,24 +91,25 @@ export default function LeaseMarketPage() {
             {[
               {
                 title: "Flexible Terms",
-                description: "Choose from various lease durations and conditions",
-                icon: "📅"
+                description:
+                  "Choose from various lease durations and conditions",
+                icon: "📅",
               },
               {
                 title: "Verified Listings",
                 description: "All listings are verified for your safety",
-                icon: "✓"
+                icon: "✓",
               },
               {
                 title: "Secure Payments",
                 description: "Safe and secure payment processing",
-                icon: "🔒"
+                icon: "🔒",
               },
               {
                 title: "24/7 Support",
                 description: "Round-the-clock customer assistance",
-                icon: "🔄"
-              }
+                icon: "🔄",
+              },
             ].map((feature, index) => (
               <div
                 key={index}
@@ -115,14 +125,15 @@ export default function LeaseMarketPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-green-600 text-white">
+      <section className="py-5 bg-gradient-to-r from-green-400 to-blue-300 text-black">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to List Your Item?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join our community of agricultural professionals and start leasing today
+            Join our community of agricultural professionals and start leasing
+            today
           </p>
           <Link
-            href="/lease-market/list"
+            href="/lease-market/create-lease"
             className="inline-block px-8 py-4 bg-white text-green-600 rounded-lg transition-all duration-300 hover:bg-green-50 hover:scale-105 hover:shadow-lg font-semibold"
           >
             List Your Item
@@ -131,4 +142,4 @@ export default function LeaseMarketPage() {
       </section>
     </main>
   );
-} 
+}

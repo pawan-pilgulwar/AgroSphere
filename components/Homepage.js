@@ -7,7 +7,7 @@ export default function Homepage() {
     <main className="min-h-screen w-full max-w-[1920px] mx-auto">
       {/* Hero Section with Product Showcase */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-green-50 to-white opacity-75 animate-gradient"></div>
+        <div className="absolute inset-0  opacity-75 animate-gradient"></div>
         <div className="container mx-auto px-4 z-10 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-left space-y-8 animate-fade-in">
@@ -52,7 +52,7 @@ export default function Homepage() {
       </section>
 
       {/* Product Categories Section */}
-      <section className="py-20 bg-white" id="categories">
+      <section className="py-20" id="categories">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 transition-all duration-500 hover:scale-105 hover:text-green-700">
             Shop by Category
@@ -145,7 +145,7 @@ export default function Homepage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -169,7 +169,7 @@ export default function Homepage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-green-50">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 transition-all duration-500 hover:scale-105 hover:text-green-700">
             Why Choose AgroSphere?
@@ -219,7 +219,7 @@ export default function Homepage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 transition-all duration-500 hover:scale-105 hover:text-green-700">
             What Our Farmers Say
@@ -257,7 +257,7 @@ export default function Homepage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-10 bg-gradient-to-r from-green-600 to-green-700 text-white">
+      <section className="py-10 bg-gradient-to-r from-green-400 to-blue-300 text-black">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-8 transition-all duration-500 hover:scale-105">
             Ready to Transform Your Farm?
@@ -275,7 +275,7 @@ export default function Homepage() {
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 border-2 border-white text-white rounded-lg transition-all duration-300 hover:bg-white hover:text-green-700 hover:scale-105 hover:shadow-lg hover:translate-y-[-2px] font-semibold"
+              className="px-8 py-4 border-2 border-white text-black rounded-lg transition-all duration-300 hover:bg-white hover:text-green-700 hover:scale-105 hover:shadow-lg hover:translate-y-[-2px] font-semibold"
             >
               Contact Us
             </Link>

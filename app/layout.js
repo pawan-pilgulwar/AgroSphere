@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         <AlertProvider>
           <CartProvider>
             <Navbar />
-            <div className="bg-gradient-to-tl min-h-screen">{children}</div>
+            <div className="bg-gradient-to-r from-green-300 to-blue-200 min-h-screen w-full ">{children}</div>
             <Footer />
           </CartProvider>
         </AlertProvider>
